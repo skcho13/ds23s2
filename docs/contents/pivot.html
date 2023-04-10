@@ -521,19 +521,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>기본적으로 table1의 형태일 때, 효과적으로 데이터를 다룰 수 있음</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute rate per 10,000</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>table1.assign(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    rate <span class="op">=</span> <span class="kw">lambda</span> x: x.cases <span class="op">/</span> x.population <span class="op">*</span> <span class="dv">100000</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    rate <span class="op">=</span> <span class="kw">lambda</span> x: x.cases <span class="op">/</span> x.population <span class="op">*</span> <span class="dv">10_000</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>       country  year   cases  population  rate
-0  Afghanistan  1999     745    19987071  3.73
-1  Afghanistan  2000    2666    20595360 12.94
-2       Brazil  1999   37737   172006362 21.94
-3       Brazil  2000   80488   174504898 46.12
-4        China  1999  212258  1272915272 16.67
-5        China  2000  213766  1280428583 16.69</code></pre>
+0  Afghanistan  1999     745    19987071  0.37
+1  Afghanistan  2000    2666    20595360  1.29
+2       Brazil  1999   37737   172006362  2.19
+3       Brazil  2000   80488   174504898  4.61
+4        China  1999  212258  1272915272  1.67
+5        China  2000  213766  1280428583  1.67</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="14">
@@ -582,6 +582,19 @@ Name: cases, dtype: int64</code></pre>
 5        China     2000  213766</code></pre>
 </div>
 </div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>table4a_long <span class="op">=</span> table4a.melt(id_vars<span class="op">=</span><span class="st">"country"</span>, var_name<span class="op">=</span><span class="st">"year"</span>, value_name<span class="op">=</span><span class="st">"cases"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>table4a_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>       country  year   cases
+0  Afghanistan  1999     745
+1       Brazil  1999   37737
+2        China  1999  212258
+3  Afghanistan  2000    2666
+4       Brazil  2000   80488
+5        China  2000  213766</code></pre>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -593,33 +606,20 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p><code>stack()</code>은 index를 이용해 long form으로 변환시켜 줌</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>table4a.set_index(<span class="st">"country"</span>).stack()  <span class="co"># Series</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># country          </span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Afghanistan  1999       745</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#              2000      2666</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Brazil       1999     37737</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#              2000     80488</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># China        1999    212258</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#              2000    213766</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># dtype: int64</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>table4a.set_index(<span class="st">"country"</span>).stack().unstack(level<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># country  Afghanistan  Brazil   China</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 1999             745   37737  212258</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2000            2666   80488  213766</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>table4a_long <span class="op">=</span> table4a.melt(id_vars<span class="op">=</span><span class="st">"country"</span>, var_name<span class="op">=</span><span class="st">"year"</span>, value_name<span class="op">=</span><span class="st">"cases"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>table4a_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
-<pre><code>       country  year   cases
-0  Afghanistan  1999     745
-1       Brazil  1999   37737
-2        China  1999  212258
-3  Afghanistan  2000    2666
-4       Brazil  2000   80488
-5        China  2000  213766</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>table4a.set_index(<span class="st">"country"</span>).stack()  <span class="co"># Series</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># country          </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Afghanistan  1999       745</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#              2000      2666</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Brazil       1999     37737</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#              2000     80488</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># China        1999    212258</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#              2000    213766</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># dtype: int64</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>table4a.set_index(<span class="st">"country"</span>).stack().unstack(level<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># country  Afghanistan  Brazil   China</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 1999             745   37737  212258</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2000            2666   80488  213766</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="cell" data-execution_count="42">
