@@ -487,7 +487,8 @@ Sun       0      76</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tips.groupby([<span class="st">"day"</span>, <span class="st">"time"</span>]).size()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupby를 이용</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tips.groupby([<span class="st">"day"</span>, <span class="st">"time"</span>]).size()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>day   time  
 Thur  Lunch     61
@@ -501,7 +502,8 @@ Length: 8, dtype: int64</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tips.groupby([<span class="st">"day"</span>, <span class="st">"time"</span>]).size().unstack()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupby &amp; unstack를 이용</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tips.groupby([<span class="st">"day"</span>, <span class="st">"time"</span>]).size().unstack()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>time  Lunch  Dinner
 day                
@@ -553,7 +555,8 @@ Sun  Dinner 3.26</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tips.groupby([<span class="st">"day"</span>, <span class="st">"time"</span>])[<span class="st">"tip"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupby를 이용</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>tips.groupby([<span class="st">"day"</span>, <span class="st">"time"</span>])[<span class="st">"tip"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>day   time  
 Thur  Lunch    2.77
@@ -617,7 +620,8 @@ Sun    NaN   3.26        NaN  21.41</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tips.pivot_table(index<span class="op">=</span><span class="st">"day"</span>, columns<span class="op">=</span><span class="st">"time"</span>, values<span class="op">=</span><span class="st">"tip"</span>, margins<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># margins 추가</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>tips.pivot_table(index<span class="op">=</span><span class="st">"day"</span>, columns<span class="op">=</span><span class="st">"time"</span>, values<span class="op">=</span><span class="st">"tip"</span>, margins<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>time  Lunch  Dinner  All
 day                     
