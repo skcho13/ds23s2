@@ -1,0 +1,44 @@
+---
+title: Welcome
+subtitle: 동국대 융합교육원, 데이터분석 및 시각화, 2023 1학기
+date: Feb 11, 2023
+author: Sungkyun Cho
+---
+
+## 강의 정보
+강사: 조성균 / sk.cho@snu.ac.kr  
+면담 시간: 수업 후  
+조교: 정은정 / gtsyej11@naver.com   
+수업시간: 월, 수 1:00 ~ 2:50PM  
+Website: [da.modellings.art](https://da.modellings.art)
+
+과제: Notice  
+질문: Communicate/Ask
+
+## 강의 개요
+본 강의에서는 인터넷과 기술의 발전으로 풍부한 데이터들이 양산됨에 따라 그 안에 숨겨진 패턴을 찾고 분석하여 실증적 사실과 원리를 파악하는데 요구되는 기술들을 계발하는데 도움을 주고자 합니다. 이를 위해서는 1) 데이터 분석 툴을 자유자재로 다룰 수 있는 기술, 2) 주어진 데이터에 적절한 툴을 선택할 수 있는 판단력, 3) 파악한 패턴으로부터 현상의 본질을 추론할 수 있는 인과관계 추론의 원리들이 함께 필요합니다. 
+
+수업은 크게 4부분으로 나뉨
+
+- 데이터 시각화와 탐색적 분석 (exploratory data analysis)
+- 모델링 (modelling)
+- 통계 (statistics)
+- 기술적 분석 (descriptive analysis)
+
+
+### 교재
+
+- 번역서: Pandas를 이용한 데이터 분석 실습 2/e  
+  Hands-On Data Analysis with Pandas (2e) by Stefanie Molin: 
+    [code](https://github.com/stefmolin/Hands-On-Data-Analysis-with-Pandas-2nd-edition) in GitHub 
+
+- [Python for Data Analysis (3e)](https://wesmckinney.com/book/) by Wes McKinney: 
+    [code](https://github.com/wesm/pydata-book/tree/3rd-edition) in GitHub  
+    2판 번역서: 파이썬 라이브러리를 활용한 데이터 분석
+
+- [R for Data Science](https://r4ds.had.co.nz/index.html) by Wickham & Grolemund; 
+    [2e in progress](https://r4ds.hadley.nz/ )
+
+
+## 수업 활동
+출석 (5%), 일반과제 (25%), 중간고사 (20%), 기말고사 (20%), 개별 프로젝트 (30%)

@@ -1,0 +1,128 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+    - "*.qmd"
+    - "*.ipynb"
+    - "!contents/ignore/"
+    #- "!exercise*.ipynb"
+    - "!contents/*.py"
+  resources: CNAME
+
+website:
+  page-navigation: true
+  title: "DG Data Analysis & Vis"
+  description: "Data Analysis and Visualization"
+
+  # site-url:
+  # repo-url:
+  # repo-actions: [edit, issue]
+
+  page-footer:
+    # right: "This page is built with [Quarto](https://quarto.org/)."
+    left: This work © 2023 by Sungkyun Cho is licensed under CC BY-NC-SA 4.0 
+    # background: 
+
+  sidebar:
+    # background: "#F6F6FF"
+    # logo: 
+    pinned: true
+    align: center
+    # tools:
+    #   - icon: github
+    #     href: 
+    #     text: "GitHub organization"
+    style: "docked"
+    search: true
+    collapse-level: 2
+    
+    contents:
+      - href: index.qmd
+      - href: contents/notice.qmd
+      - section: Introduction
+        contents:
+          - href: contents/intro.qmd
+            text: Data Anlaysis Intro
+          - href: contents/setup.ipynb
+            text: Setup
+          - section: contents/pandas.ipynb
+            contents: 
+            - href: contents/inspection.ipynb
+          - href: contents/vis.ipynb
+            text: Data visualization
+      - text: ---
+      - section: Visualize
+        contents:
+          - href: contents/seaborn.ipynb
+            text: Seaborn.objects
+          - section: contents/plots.ipynb
+            contents: 
+              - href: contents/alt_plots.ipynb
+          - href: contents/customizing.ipynb
+      - text: ---
+      - section: Transform
+        contents:
+          - href: contents/subsetting.ipynb
+            contents:
+              - href: contents/views.ipynb
+          - section: contents/transform.ipynb
+            contents: 
+              - href: contents/case1.ipynb
+              - href: contents/exercise_transform.ipynb
+          - section: Transforming II
+            contents:
+              - href: contents/combine.ipynb
+              - href: contents/pivot.ipynb
+              - href: contents/crosstab.ipynb
+                text: Pivot Table
+              - href: contents/exercise_wrangle.ipynb
+      - section: Exercises
+        contents:
+          - href: contents/exercise1.ipynb
+            text: Billboard
+          - href: contents/exercise2.ipynb
+            text: MovieLens
+      - text: ---
+      - section: Exploratory Data Analysis
+        # contents: 
+        #   - href: contents/eda.ipynb
+      - text: ---
+      - section: Modelling
+        # contents:
+        #   - href: contents/modelbasic.ipynb
+        #   - href: contents/modelling1.ipynb
+        #   - href: contents/modelling2.ipynb
+      - text: ---
+      - section: Statistics
+      - text: ---
+      - section: Communicate
+        contents:
+          - href: https://docs.google.com/document/d/1cZ0JzhjjdMBYtlpgkKGJ9LSbuwcv5eRIOQ5CRahw5Js/edit?usp=sharing
+            text: Ask
+          - href: https://docs.google.com/document/d/1CFVAUGKB1h8z3vEAl5vjp5lvYiv-FLYtlRDFGSN2_aY/edit?usp=sharing
+            text: Personal Project
+
+  # navbar:
+  #   left:
+  #     - href: index.qmd
+  #       text: Home
+  #     - about.qmd
+
+format:
+  html:
+        toc: true
+        toc-depth: 4
+        toc-location: right
+        code-fold: false
+        code-overflow: scroll
+        code-summary: "Show the code"
+        theme: [sandstone, theme-light.scss]
+        fontsize: .95em
+        linestretch: 1.7
+        code-copy: true
+        highlight-style: Ayu-light
+        link-external-newwindow: true
+        # css: styles.css
+
+
+
