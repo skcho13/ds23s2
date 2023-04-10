@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sungkyun Cho">
+<meta name="dcterms.date" content="2023-02-11">
+
+<title>DG Data Analysis &amp; Vis - Model basics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Model basics</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">DG Data Analysis &amp; Vis</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/notice.html" class="sidebar-item-text sidebar-link">Notice</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/intro.html" class="sidebar-item-text sidebar-link">Data Anlaysis Intro</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/setup.html" class="sidebar-item-text sidebar-link">Setup</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../contents/pandas.html" class="sidebar-item-text sidebar-link">NumPy and pandas</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/inspection.html" class="sidebar-item-text sidebar-link">Inspecting data</a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/vis.html" class="sidebar-item-text sidebar-link">Data visualization</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Visualize</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/seaborn.html" class="sidebar-item-text sidebar-link">Seaborn.objects</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../contents/plots.html" class="sidebar-item-text sidebar-link">Plots</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/alt_plots.html" class="sidebar-item-text sidebar-link">Alternative plots</a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/customizing.html" class="sidebar-item-text sidebar-link">Customizing</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Transform</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../contents/subsetting.html" class="sidebar-item-text sidebar-link">Subsetting</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/views.html" class="sidebar-item-text sidebar-link">Views and Copies</a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../contents/transform.html" class="sidebar-item-text sidebar-link">Transforming I</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/case1.html" class="sidebar-item-text sidebar-link">Case study</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/exercise_transform.html" class="sidebar-item-text sidebar-link">Exercises</a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">Transforming II</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/combine.html" class="sidebar-item-text sidebar-link">Combine</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/pivot.html" class="sidebar-item-text sidebar-link">Pivot</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/crosstab.html" class="sidebar-item-text sidebar-link">Pivot Table</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/exercise_wrangle.html" class="sidebar-item-text sidebar-link">Exercises</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/exercise1.html" class="sidebar-item-text sidebar-link">Billboard</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/exercise2.html" class="sidebar-item-text sidebar-link">MovieLens</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Exploratory Data Analysis</span>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Modelling</span>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Statistics</span>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">Communicate</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://docs.google.com/document/d/1cZ0JzhjjdMBYtlpgkKGJ9LSbuwcv5eRIOQ5CRahw5Js/edit?usp=sharing" class="sidebar-item-text sidebar-link">Ask</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://docs.google.com/document/d/1CFVAUGKB1h8z3vEAl5vjp5lvYiv-FLYtlRDFGSN2_aY/edit?usp=sharing" class="sidebar-item-text sidebar-link">Personal Project</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul>
+  <li><a href="#statistical-learning-vs.-machine-learning" id="toc-statistical-learning-vs.-machine-learning" class="nav-link" data-scroll-target="#statistical-learning-vs.-machine-learning">Statistical Learning vs.&nbsp;Machine Learning</a></li>
+  <li><a href="#hypothesis-generation-vs.-hypothesis-confirmation" id="toc-hypothesis-generation-vs.-hypothesis-confirmation" class="nav-link" data-scroll-target="#hypothesis-generation-vs.-hypothesis-confirmation">Hypothesis generation vs.&nbsp;hypothesis confirmation</a></li>
+  </ul></li>
+  <li><a href="#model-basics" id="toc-model-basics" class="nav-link" data-scroll-target="#model-basics">Model basics</a>
+  <ul>
+  <li><a href="#a-simple-model" id="toc-a-simple-model" class="nav-link" data-scroll-target="#a-simple-model">A simple model</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
+  <li><a href="#visualising-models" id="toc-visualising-models" class="nav-link" data-scroll-target="#visualising-models">Visualising models</a>
+  <ul>
+  <li><a href="#predictions-the-pattern-that-the-model-has-captured" id="toc-predictions-the-pattern-that-the-model-has-captured" class="nav-link" data-scroll-target="#predictions-the-pattern-that-the-model-has-captured">Predictions: the pattern that the model has captured</a></li>
+  <li><a href="#residuals-what-the-model-has-missed." id="toc-residuals-what-the-model-has-missed." class="nav-link" data-scroll-target="#residuals-what-the-model-has-missed.">Residuals: what the model has missed.</a></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables">Categorical variables</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Model basics</h1>
+<p class="subtitle lead">R for Data Science by Wickham &amp; Grolemund</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sungkyun Cho </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 11, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p><img src="images/model.png" class="img-fluid" width="500"></p>
+<blockquote class="blockquote">
+<p>The goal of a model is to provide a simple low-dimensional summary of a dataset. Ideally, the model will capture true “signals” (i.e.&nbsp;patterns generated by the phenomenon of interest), and ignore “noise” (i.e.&nbsp;random variation that you’re not interested in).<br>
+* physics: models for the physical world</p>
+</blockquote>
+<p>이상적으로, 모형(model)이 현상으로부터 노이즈가 제거된 진정한 신호를 잡아내 주기를 기대.</p>
+<div class="cell quarto-layout-panel" data-execution_count="12">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-6-output-1.png" class="img-fluid" width="599"></p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-6-output-2.png" class="img-fluid" width="599"></p>
+</div>
+</div>
+</div>
+<p>예를 들어, 캐럿과 가격의 진정한 관계를 모델로 표현</p>
+<p>linear model: y = ax + b</p>
+<p>log(price) ~ a * log(carat) + b</p>
+<p>나머지 residuals은 노이즈?</p>
+<p>이 책에서는</p>
+<ul>
+<li><strong>predictive</strong> models(예측 모형)만을 다룸 (supervised learning)</li>
+<li><strong>data discovery</strong> models은 machine/statistical learning에서… (unsupervised learning)
+<ul>
+<li>예측이 아닌, 데이터에 내재하는 흥미로운 관계들을 발견. ex) clustering analysis</li>
+</ul></li>
+</ul>
+<section id="statistical-learning-vs.-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-learning-vs.-machine-learning">Statistical Learning vs.&nbsp;Machine Learning</h2>
+<p>Machine learning arose as a subfield of Artificial Intelligence.<br>
+Statistical learning arose as a subfield of Statistics.</p>
+<p>There is much overlap — both fields focus on supervised and unsupervised problems:</p>
+<ul>
+<li>Machine learning has a greater emphasis on large scale applications and <strong>prediction accuracy.</strong></li>
+<li>Statistical learning emphasizes models and their <strong>interpretability</strong>, and precision and uncertainty.</li>
+</ul>
+<p>But the distinction has become more and more blurred, and there is a great deal of “<strong>cross-fertilization</strong>”.</p>
+<p>Machine learning has the upper hand in Marketing!</p>
+<pre><code>            Trevor Hastie and Robert Tibshirani, An Introduction to Statistical Learning</code></pre>
+</section>
+<section id="hypothesis-generation-vs.-hypothesis-confirmation" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-generation-vs.-hypothesis-confirmation">Hypothesis generation vs.&nbsp;hypothesis confirmation</h2>
+<p>이 책에서 모델은 탐색적 데이터 분석(EDA)의 한 도구로 사용하나 전통적으로 모델은 가설을 검정하거나 모집단에 대한 추론을 위해 사용됨</p>
+<ol type="1">
+<li>Each observation can either be used for exploration or confirmation, not both.</li>
+<li>You can use an observation as many times as you like for exploration, but you can only use it once for confirmation. As soon as you use an observation twice, you’ve switched from confirmation to exploration.</li>
+</ol>
+<p>you should never sell an exploratory analysis as a confirmatory analysis because it is fundamentally misleading.</p>
+<p>통계적 검정에 관심이 있다면, 분석 전에 다음과 같이 데이터를 나누는 것을 고려</p>
+<ol type="1">
+<li>60% of your data goes into a&nbsp;<strong>training</strong>&nbsp;(or exploration) set. You’re allowed to do anything you like with this data: visualise it and fit tons of models to it.</li>
+<li>20% goes into a&nbsp;<strong>query</strong>&nbsp;set. You can use this data to compare models or visualisations by hand, but you’re not allowed to use it as part of an automated process.</li>
+<li>20% is held back for a&nbsp;<strong>test</strong>&nbsp;set. You can only use this data ONCE, to test your final model. (최종 모형의 테스트)</li>
+</ol>
+</section>
+</section>
+<section id="model-basics" class="level1">
+<h1>Model basics</h1>
+<p>우선, simulated 데이터셋으로 모형을 세우는 방식을 들여다보면서 본질적인 부분을 익히고자 함.</p>
+<p>모델은 두 부분으로 나뉘는데</p>
+<ol type="1">
+<li><p><strong>A family of models</strong>를 정의: generic 패턴을 표현해 줄 수 있는 모델 타입</p>
+<p>예를 들어,</p></li>
+</ol>
+<ul>
+<li><p>만약, 선형적인 관계라면 선형 모델인 &nbsp; <span class="math inline">\(y = a_2 x + a_1\)</span></p></li>
+<li><p>곡선 관계라면 가령, &nbsp; <span class="math inline">\(y = a_2 x^{a_1}\)</span></p>
+<p><span class="math inline">\(a_1, a_2, a_3\)</span>는 패턴을 잡아낼 수 있도록 변하는 파라미터</p></li>
+</ul>
+<ol start="2" type="1">
+<li><p><strong>A fitted model</strong>을 생성: 데이터에 가장 가까운(적합한) 파라미터에 해당하는 특정 모델을 선택: “fit a model to data”</p>
+<p>예를 들어,</p>
+<ul>
+<li><span class="math inline">\(y = 3x+7\)</span></li>
+<li><span class="math inline">\(y = 9x^{1.6}\)</span></li>
+</ul></li>
+</ol>
+<p>A fitted model은 a family of models 중에 데이터에 가장 가까운 모델임</p>
+<ul>
+<li>이는 소위 “<strong>best</strong>” model일 뿐</li>
+<li>“good” model임을 뜻하지 않고, “true” model임을 뜻하는 것은 더더욱 아님</li>
+</ul>
+<blockquote class="blockquote">
+<p>All models are wrong, but some are useful.<br>
+The goal of a model is not to uncover truth, but to discover a simple approximation that is still useful.</p>
+</blockquote>
+<section id="a-simple-model" class="level2">
+<h2 class="anchored" data-anchor-id="a-simple-model">A simple model</h2>
+<div class="cell" data-execution_count="143">
+<div class="cell-output cell-output-display" data-execution_count="143">
+<pre><code>     x     y
+0    1  4.20
+1    1  7.51
+2    1  2.13
+..  ..   ...
+27  10 24.97
+28  10 23.35
+29  10 21.98
+
+[30 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="215">
+<div class="cell-output cell-output-display" data-execution_count="215">
+<p><img src="modelbasic_files/figure-html/cell-9-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+<ul>
+<li>패턴: 강한 선형 관계</li>
+<li>선형 모델 family인 <span class="math inline">\(y = a_2 x + a_1\)</span>을 세움</li>
+<li>무수히 많은 <span class="math inline">\(a_1, a_2\)</span>의 값들 중 위 데이터에 가장 가까운 값을 찾음
+<ul>
+<li>그 예로, 임의로 250개의 선형 모델을 그려봄</li>
+</ul></li>
+</ul>
+<div class="cell" data-execution_count="214">
+<div class="cell-output cell-output-display" data-execution_count="214">
+<p><img src="modelbasic_files/figure-html/cell-12-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+<p>이 선형모델 중 데이터에 가장 “가까운” 모델을 찾고자 하는데, 데이터와 모델과의 거리를 정의해야 함.</p>
+<p><span class="math inline">\(d =|~data - model~|\)</span></p>
+<p>예) 모델과 데이터의 수직 거리의 총체 (residuals)</p>
+<p><img src="images/residual.png" class="img-fluid" width="700"></p>
+<p>Model 1.1: <span class="math inline">\(y = 1.5x+7\)</span>의 경우, 이 모델이 예측하는 값들</p>
+<div class="cell" data-execution_count="161">
+<div class="cell-output cell-output-display" data-execution_count="161">
+<pre><code>array([ 8.5,  8.5,  8.5, 10. , 10. , 10. , 11.5, 11.5, 11.5, 13. , 13. ,
+       13. , 14.5, 14.5, 14.5, 16. , 16. , 16. , 17.5, 17.5, 17.5, 19. ,
+       19. , 19. , 20.5, 20.5, 20.5, 22. , 22. , 22. ])</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Model evaluation: RMSE, MAE
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>The prediction accuracy</strong> of the models</p>
+<ul>
+<li><p>Root-mean-squared deviation/error: <span class="math inline">\(RMSE = \displaystyle\sqrt{\frac{1}{n} \sum_{i=1}^{n}{(y_i -\hat y_i)^2}}\)</span></p></li>
+<li><p>Mean absolute error: <span class="math inline">\(MAE = \displaystyle\frac{1}{n} \sum_{i=1}^{n}{|~y_i -\hat y_i~|}\)</span> : 이상치에 덜 민감함</p></li>
+</ul>
+</div>
+</div>
+<p>Model 1.1의 RMSE:</p>
+<div class="cell" data-execution_count="163">
+<div class="cell-output cell-output-stdout">
+<pre><code>2.67</code></pre>
+</div>
+</div>
+<p>즉, 데이터셋 sim1과 model 1.1 과의 거리 <span class="math inline">\(d=|~sim1 -model1~| = 2.67\)</span></p>
+<p>위의 250개의 모델에 대해 각각 거리를 구하면</p>
+<div class="cell" data-execution_count="164">
+<div class="cell-output cell-output-display" data-execution_count="164">
+<pre><code>       a1    a2  dist
+0   21.79 -2.92 17.42
+1   -2.83 -0.57 22.83
+2   -6.39  2.16 10.26
+..    ...   ...   ...
+247  0.51  4.19 10.38
+248 27.94 -0.84 11.59
+249 27.93  2.45 25.99
+
+[250 rows x 3 columns]</code></pre>
+</div>
+</div>
+<p>이 중 제일 좋은 모델(dist가 최소) 10개의 모델을 그리면,</p>
+<div class="cell" data-execution_count="216">
+<div class="cell-output cell-output-display" data-execution_count="216">
+<p><img src="modelbasic_files/figure-html/cell-16-output-1.png" width="672" height="445"></p>
+</div>
+</div>
+<p>250개의 모델 중 10개의 모델을 다음과 같은 <span class="math inline">\((a1, a2)\)</span> 평면으로 살펴보면,<br>
+즉, model space라고 볼 수 있음</p>
+<p>오렌지 색은 위에서 구한 10 best models</p>
+<div class="cell" data-execution_count="210">
+<div class="cell-output cell-output-display" data-execution_count="210">
+<p><img src="modelbasic_files/figure-html/cell-17-output-1.png" width="681" height="445"></p>
+</div>
+</div>
+<p>점차 촘촘한 간격으로 grid search를 하면서 거리를 최소로 하는 모델을 찾아가는 것이고, 실제로는 Newton-Raphson search를 통해 최소값을 구하는 알고리즘을 통해 구할 수 있음.</p>
+<p>즉, 거리를 최소로 하는 a1, a2를 찾으면,</p>
+<div class="cell" data-execution_count="230">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>minimize(measure_distance, [<span class="dv">0</span>, <span class="dv">0</span>], args<span class="op">=</span>(sim1)).x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="230">
+<pre><code>array([4.22, 2.05])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="234">
+<div class="cell-output cell-output-display" data-execution_count="234">
+<p><img src="modelbasic_files/figure-html/cell-19-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>sim1을 이용한 위의 예는 모든 모델에 적용될 수 있음</p>
+<ul>
+<li>즉, <span class="math inline">\(y = f(x1, x2,...)\)</span> 형태의 a family of models을 구성한 후</li>
+<li>모델과 데이터와의 거리 <span class="math inline">\(d =|~data - model~|\)</span>를 정의한 후</li>
+<li>거리 <span class="math inline">\(d\)</span>가 최소가 되는 파라미터를 구하면, a family of models 중 <strong>best model</strong>을 만들 수 있음</li>
+<li>새로운 a family of models을 구성해서 위를 반복하면, 여러 다른 모델들을 비교할 수 있음</li>
+</ul>
+<div class="cell" data-execution_count="219">
+<div class="cell-output cell-output-display" data-execution_count="219">
+<pre><code>Intercept   4.22
+x           2.05
+dtype: float64</code></pre>
+</div>
+</div>
+<p>앞서 다룬 선형 모형, linear (regression) model은 일반적인 <span class="math inline">\(\hat{y} = a_0 + a_1 x_1 + a_2 x_2 + ~... ~ + a_n x_n\)</span> 형태를 띄고,</p>
+<ul>
+<li><p>앞의 예는 <span class="math inline">\(n=1\)</span> 에 해당하며, <span class="math inline">\(\hat{y} =a_0 +a_1x_1\)</span>에 대해서 다음과 같이 편리하게 적용할 수있음</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sim1_mod <span class="op">&lt;-</span> ols(<span class="st">"y ~ x"</span>, data <span class="op">=</span> sim1)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>sim1_mod.fit().params <span class="co"># 모델의 parameter 즉, coefficients를 내줌</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Intercept   4.22</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># x           2.05  # 위에서 구한 파라미터값과 동일함</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(참고) Linear models의 경우 위에서 처럼 optimization을 이용하지 않고 방정식의 해를 구하듯 exact form으로 최소값을 구함</p></li>
+<li><p><span class="math inline">\(n=2\)</span> 인 경우, 즉 두 변수 <code>x1, x2</code>로 <code>y</code>를 예측하는 경우,</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ols(<span class="st">"y ~ x1 + x2"</span>, data <span class="op">=</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>모형 세울 때, <strong>Wilkinson-Rodgers notation</strong>을 사용하는 것이 매우 효과적인데,<br>
+(initially described in&nbsp;Symbolic Description of Factorial Models for Analysis of Variance by G. N. Wilkinson and C. E. Rogers, 1973)</p>
+<ul>
+<li><strong>formula:</strong> <code>y ~ x1 + x2</code>는 모형 <span class="math inline">\(\hat{y} = a_0 +a_1x_1 + a_2x_2\)</span> 을 의미</li>
+<li><code>statsmodels</code>는 formula notation으로 모형을 세우는 것을 지원함: <a href="https://www.statsmodels.org/stable/example_formulas.html">link</a></li>
+<li><code>sklearn</code>은 formula notation을 직접 지원하지 않지만, <code>patsy</code> <a href="https://patsy.readthedocs.io/en/latest/index.html">패키지</a>를 이용하여 design matrix를 직접 얻어 적용할 수 있음: <a href="https://learn-scikit.oneoffcoder.com/patsy.html">patsy in scikit-learn</a> 또는 <a href="https://scikit-lego.netlify.app/api/preprocessing.html#sklego.preprocessing.PatsyTransformer">PatsyTransformer</a></li>
+</ul></li>
+<li><p>예를 들어,</p></li>
+</ul>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>houses <span class="op">=</span> sm.datasets.get_rdataset(<span class="st">"SaratogaHouses"</span>, <span class="st">"mosaicData"</span>).data</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># statsmodels</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ols(<span class="st">"price ~ livingArea + bedrooms"</span>, data<span class="op">=</span>houses).fit().params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>Intercept     36667.90
+livingArea      125.40
+bedrooms     -14196.77
+dtype: float64</code></pre>
+</div>
+</div>
+<div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># patsy</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> patsy <span class="im">import</span> dmatrices <span class="co"># design matrix</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>formula <span class="op">=</span> <span class="st">"price ~ livingArea + bedrooms"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span> dmatrices(formula, data<span class="op">=</span>houses, return_type<span class="op">=</span><span class="st">"dataframe"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y)<span class="op">;</span> <span class="bu">print</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-execution_count="6">
+
+</div>
+</div>
+<div class="cell quarto-layout-panel" data-execution_count="11">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>         price
+0    132500.00
+1    181115.00
+2    109000.00
+...        ...
+1725 194900.00
+1726 125000.00
+1727 111300.00
+
+[1728 rows x 1 columns]</code></pre>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>      livingArea  bedrooms
+0         906.00      2.00
+1        1953.00      3.00
+2        1944.00      4.00
+...          ...       ...
+1725     1099.00      2.00
+1726     1225.00      3.00
+1727     1959.00      3.00
+
+[1728 rows x 2 columns]</code></pre>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scikit-learn</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>formula <span class="op">=</span> <span class="st">"price ~ livingArea + bedrooms - 1"</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span> dmatrices(formula, data<span class="op">=</span>houses, return_type<span class="op">=</span><span class="st">"dataframe"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> LinearRegression().fit(X, y)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mod.coef_)<span class="op">;</span> <span class="bu">print</span>(mod.intercept_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell quarto-layout-panel" data-execution_count="10">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>array([[   125.4 , -14196.77]])</code></pre>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>array([36667.9])</code></pre>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualising-models" class="level1">
+<h1>Visualising models</h1>
+<p>Fitted models을 이해하기 위해 모델이 예측하는 부분(prediction)과 모델이 놓친 부분(residuals)을 시각화해서 보는 것이 유용함</p>
+<section id="predictions-the-pattern-that-the-model-has-captured" class="level2">
+<h2 class="anchored" data-anchor-id="predictions-the-pattern-that-the-model-has-captured">Predictions: the pattern that the model has captured</h2>
+<p>우선, 예측 변수들의 데이터 값을 커버하는 grid를 구성</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sim1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>     x     y
+0    1  4.20
+1    1  7.51
+2    1  2.13
+..  ..   ...
+27  10 24.97
+28  10 23.35
+29  10 21.98
+
+[30 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a grid for the range of x sim1</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame(<span class="bu">dict</span>(x<span class="op">=</span>np.linspace(sim1.x.<span class="bu">min</span>(), sim1.x.<span class="bu">max</span>(), <span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>모델에 grid를 입력하여 prediction값을 추가</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a model for sim1</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sim1_mod <span class="op">=</span> ols(<span class="st">"y ~ x"</span>, data<span class="op">=</span>sim1).fit()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"pred"</span>] <span class="op">=</span> sim1_mod.predict(grid) <span class="co"># column 이름이 매치되어야 함</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>       x  pred
+0   1.00  6.27
+1   2.00  8.32
+2   3.00 10.38
+..   ...   ...
+7   8.00 20.63
+8   9.00 22.68
+9  10.00 24.74
+
+[10 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 또는</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>sim1[<span class="st">"fitted"</span>] <span class="op">=</span> sim1_mod.fittedvalues</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sim1[<span class="st">"fitted2"</span>] <span class="op">=</span> sim1_mod.predict(sim1.x)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>sim1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>     x     y  fitted  fitted2
+0    1  4.20    6.27     6.27
+1    1  7.51    6.27     6.27
+2    1  2.13    6.27     6.27
+..  ..   ...     ...      ...
+27  10 24.97   24.74    24.74
+28  10 23.35   24.74    24.74
+29  10 21.98   24.74    24.74
+
+[30 rows x 4 columns]</code></pre>
+</div>
+</div>
+<p>prediction을 시각화</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(sim1, x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dot(color<span class="op">=</span><span class="st">".6"</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), x<span class="op">=</span>grid.x, y<span class="op">=</span>grid.pred) <span class="co"># prediction!</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<p><img src="modelbasic_files/figure-html/cell-30-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+</section>
+<section id="residuals-what-the-model-has-missed." class="level2">
+<h2 class="anchored" data-anchor-id="residuals-what-the-model-has-missed.">Residuals: what the model has missed.</h2>
+<p><span class="math inline">\(e = Y - \hat{Y}\)</span> : 관측값 - 예측값</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sim1[<span class="st">"resid"</span>] <span class="op">=</span> sim1_mod.resid  <span class="co"># Y - Y_hat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sim1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>     x     y  fitted  fitted2  resid
+0    1  4.20    6.27     6.27  -2.07
+1    1  7.51    6.27     6.27   1.24
+2    1  2.13    6.27     6.27  -4.15
+..  ..   ...     ...      ...    ...
+27  10 24.97   24.74    24.74   0.23
+28  10 23.35   24.74    24.74  -1.39
+29  10 21.98   24.74    24.74  -2.76
+
+[30 rows x 5 columns]</code></pre>
+</div>
+</div>
+<p>우선, residuals의 분포를 시각화해서 살펴보면,</p>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(sim1, x<span class="op">=</span><span class="st">'resid'</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.Hist(binwidth<span class="op">=</span><span class="fl">.4</span>))</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<p><img src="modelbasic_files/figure-html/cell-33-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+<p>예측 변수와 residuals의 관계를 시각화해서 보면,</p>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(sim1, x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'resid'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dot())</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.PolyFit(<span class="dv">5</span>))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<p><img src="modelbasic_files/figure-html/cell-34-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+<p>위의 residuals은 특별한 패턴을 보이지 않아야 모델이 데이터의 패턴을 잘 잡아낸 것으로 판단할 수 있음.<br>
+아래는 원래 데이터와 일차 선형 모형에 대한 예측값의 관계를 시각화한 것</p>
+<div class="cell" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="45">
+<p><img src="modelbasic_files/figure-html/cell-35-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+<p>Residuals에 패턴이 보이는 경우</p>
+<div class="cell quarto-layout-panel" data-execution_count="57">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-38-output-1.png" class="img-fluid" width="599"></p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-38-output-2.png" class="img-fluid" width="599"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-38-output-3.png" class="img-fluid" width="599"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-variables">Categorical variables</h2>
+<p>카테고리 변수가 predictor인 경우 복잡해짐</p>
+<ul>
+<li>formula <code>y ~ sex</code>의 경우, <span class="math inline">\(y=a_0 +a_1sex\)</span> 로 변환될 수 없음 (성별을 연산할 수 없음)</li>
+<li>실제로, formula는 <span class="math inline">\(sex[T.male]\)</span> 라는 indicator/dummy variable을 새로 만들어 membership을 나타내 줌:<br>
+<strong>dummy-coding</strong> 또는 <strong>one-hot encoding</strong> 이라고 부름.
+<ul>
+<li><span class="math inline">\(y=a_0 +a_1sex[T.male]\)</span> &nbsp; (남성일 때, <span class="math inline">\(sex[T.male]=1\)</span>, 그렇지 않은 경우 0)</li>
+</ul></li>
+</ul>
+<div class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">"sex"</span>: [<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"male"</span>], <span class="st">"response"</span>: [<span class="dv">10</span>, <span class="dv">21</span>, <span class="dv">13</span>]})</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="60">
+<pre><code>      sex  response
+0    male        10
+1  female        21
+2    male        13</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span> dmatrices(<span class="st">"response ~ sex"</span>, data<span class="op">=</span>df, return_type<span class="op">=</span><span class="st">"dataframe"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>   Intercept  sex[T.male]
+0       1.00         1.00
+1       1.00         0.00
+2       1.00         1.00</code></pre>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li>세 개의 범주인 경우: 가령, 아래와 같이 3개의 범주를 가졌다면, 두 개의 변수 <code>sex[T.male]</code>, <code>sex[T.neutral]</code>가 생성</li>
+<li>일반적으로 <code>n</code>개의 범주를 가진 변수인 경우 <code>n-1</code>개의 변수가 생성</li>
+</ul>
+<div class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">"sex"</span>: [<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"neutral"</span>], <span class="st">"response"</span>: [<span class="dv">10</span>, <span class="dv">21</span>, <span class="dv">13</span>, <span class="dv">5</span>]})</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="65">
+<pre><code>       sex  response
+0     male        10
+1   female        21
+2     male        13
+3  neutral         5</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span> dmatrices(<span class="st">"response ~ sex"</span>, data<span class="op">=</span>df, return_type<span class="op">=</span><span class="st">"dataframe"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="66">
+<pre><code>   Intercept  sex[T.male]  sex[T.neutral]
+0       1.00         1.00            0.00
+1       1.00         0.00            0.00
+2       1.00         1.00            0.00
+3       1.00         0.00            1.00</code></pre>
+</div>
+</div>
+<p>Formula는 편리하게 범주형 변수를 처리해 주기 때문에 범주형 변수의 복잡한 처리과정을 걱정할 필요가 없음</p>
+<div class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>pd.get_dummies(df[<span class="st">"sex"</span>], drop_first<span class="op">=</span><span class="va">True</span>, prefix<span class="op">=</span><span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="70">
+<pre><code>   sex_male  sex_neutral
+0      True        False
+1     False        False
+2      True        False
+3     False         True</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> set_config</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># one-hot encoding for sex in df</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>, drop<span class="op">=</span><span class="st">"first"</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>enc.fit_transform(df[[<span class="st">"sex"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="89">
+<pre><code>array([[1., 0.],
+       [0., 0.],
+       [1., 0.],
+       [0., 1.]])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="90">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>enc.get_feature_names_out()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="90">
+<pre><code>array(['sex_male', 'sex_neutral'], dtype=object)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="91">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>sim2 <span class="op">=</span> pd.read_csv(<span class="st">"data/sim2.csv"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>sim2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="91">
+<pre><code>    x    y
+0   a 1.94
+1   a 1.18
+2   a 1.24
+.. ..  ...
+37  d 2.13
+38  d 2.49
+39  d 0.30
+
+[40 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="92">
+<div class="cell-output cell-output-display" data-execution_count="92">
+<p><img src="modelbasic_files/figure-html/cell-47-output-1.png" width="599" height="445"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">This work © 2023 by Sungkyun Cho is licensed under CC BY-NC-SA 4.0</div>   
+  </div>
+</footer>
+
+
+
+</body></html>
