@@ -18,7 +18,7 @@ author: Sungkyun Cho
 - Transforming II [연습문제](https://da.modellings.art/contents/exercise_wrangle.html)  
     1 ~ 8번 모두
 
-**4.17(월) 1:00pm 수업 전까지**
+**4.19(월) 1:00pm 수업 전까지**
 
 - 연습문제 Billboard  
     1 ~ 8번 모두
@@ -28,7 +28,7 @@ author: Sungkyun Cho
 
 
 
-## 중간고사 4.19
+## 중간고사 4.24 (수정됨)
 
 ## 기말고사 6.14
 

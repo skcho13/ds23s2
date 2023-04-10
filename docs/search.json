@@ -67,7 +67,7 @@
     "href": "contents/notice.html",
     "title": "Notice",
     "section": "",
-    "text": "4.2(일) 자정까지\n\nPlots 섹션 마지막에 있는 연습문제에서 tips나 houses 데이터 중 하나 혹은 섞어서 Plots 단원에서 다뤘던 시각화를 적용해보기\n.ipynb 파일로 eclass에 제출\n\n4.12(수) 1:00pm 수업 전까지\n\nTransforming I 연습문제\nA, B 파트 전부와 C 파트는 할 수 있는 만큼\nTransforming II 연습문제\n1 ~ 8번 모두\n\n4.17(월) 1:00pm 수업 전까지\n\n연습문제 Billboard\n1 ~ 8번 모두\n연습문제 MovieLens\n1 ~ 12번"
+    "text": "4.2(일) 자정까지\n\nPlots 섹션 마지막에 있는 연습문제에서 tips나 houses 데이터 중 하나 혹은 섞어서 Plots 단원에서 다뤘던 시각화를 적용해보기\n.ipynb 파일로 eclass에 제출\n\n4.12(수) 1:00pm 수업 전까지\n\nTransforming I 연습문제\nA, B 파트 전부와 C 파트는 할 수 있는 만큼\nTransforming II 연습문제\n1 ~ 8번 모두\n\n4.19(월) 1:00pm 수업 전까지\n\n연습문제 Billboard\n1 ~ 8번 모두\n연습문제 MovieLens\n1 ~ 12번"
   },
   {
     "objectID": "contents/notice.html#중간고사-4.19",
@@ -880,5 +880,12 @@
     "title": "Data Visualization",
     "section": "Interative Plots",
     "text": "Interative Plots\nAltair\n\n\n\n\n\n\n\nPlotly"
+  },
+  {
+    "objectID": "contents/notice.html#중간고사-4.24-수정됨",
+    "href": "contents/notice.html#중간고사-4.24-수정됨",
+    "title": "Notice",
+    "section": "중간고사 4.24 (수정됨)",
+    "text": "중간고사 4.24 (수정됨)"
   }
 ]
