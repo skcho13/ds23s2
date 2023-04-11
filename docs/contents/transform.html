@@ -485,7 +485,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <hr>
 <p><em>On-time data for all flights that departed NYC (i.e.&nbsp;JFK, LGA or EWR) in 2013</em></p>
-<div class="cell" data-execution_count="34">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import the dataset</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>flights_data <span class="op">=</span> sm.datasets.get_rdataset(<span class="st">"flights"</span>, <span class="st">"nycflights13"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> flights_data.data</span>
@@ -3665,12 +3665,12 @@ Note
 </section>
 <section id="assign" class="level3">
 <h3 class="anchored" data-anchor-id="assign"><code>assign()</code></h3>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>, <span class="st">"distance"</span>, <span class="st">"air_time"</span>] <span class="op">+</span> <span class="op">\</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>        [col <span class="cf">for</span> col <span class="kw">in</span> flights.columns <span class="cf">if</span> col.endswith(<span class="st">"delay"</span>)]  <span class="co"># string method .endswith</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>flights_sml <span class="op">=</span> flights[cols].copy()</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>flights_sml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>        year  month  day  distance  air_time  dep_delay  arr_delay
 0       2013      1    1      1400    227.00       2.00      11.00
 1       2013      1    1      1416    227.00       4.00      20.00
@@ -4305,7 +4305,9 @@ Name: arr_delay, Length: 336776, dtype: float64</code></pre>
 <p>Q: 1년에 10000편 이상 운항편이 있는 도착지로 가는 항공편들만 추리면,</p>
 <div class="cell" data-execution_count="147">
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>dest_size <span class="op">=</span>  flights.groupby(<span class="st">"dest"</span>).transform(<span class="st">"size"</span>)</span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>dest_size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>dest_size</span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 또는 flights.groupby("dest")["dest"].transform("count")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="147">
 <pre><code>0          7198
 1          7198

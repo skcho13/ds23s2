@@ -452,7 +452,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="song-rankings-for-billboard-top-100-in-the-year-2000">Song rankings for Billboard top 100 in the year 2000</h2>
 <p>“billboard” in a package “tidyr”<br>
 Source: <a href="https://waxy.org/2008/05/the_whitburn_project/">The Whitburn Project</a></p>
-<p>다음 링크의 데이터는 빌보드차트에 관한 데이터입니다; <a href="https://www.dropbox.com/s/svkuflje8fesv2a/billboard.csv?dl=0">링크</a></p>
+<p>다음 링크의 데이터는 빌보드차트에 관한 데이터입니다; <a href="https://www.dropbox.com/s/svkuflje8fesv2a/billboard.csv?dl=1">링크</a></p>
 <ul>
 <li>각 곡이 차트에 진입한 날짜(<code>date_entered</code>)인 첫주(<code>wk1</code>)의 순위부터 78주(<code>wk78</code>)의 순위까지 기록되어 있습니다.</li>
 <li>차트에서 빠진 경우 missing (NA)으로 표시되어 있습니다.<br>
@@ -518,12 +518,12 @@ Note
 <li><code>.dropna(subset="rank", inplace=True)</code>를 사용하여 <code>rank</code> column의 missing을 처리하세요.</li>
 <li>결과를 <code>billboard_long</code> 변수에 할당하여 이후 문제를 이어가세요.
 <ul>
-<li>구하지 못한 경우, 정제된 다음 <a href="https://www.dropbox.com/s/fjepjyl0brr7tlw/billboard_long.csv?dl=0">파일</a>을 다운받아 사용하세요.</li>
+<li>구하지 못한 경우, 정제된 다음 <a href="https://www.dropbox.com/s/fjepjyl0brr7tlw/billboard_long.csv?dl=1">파일</a>을 다운받아 사용하세요.</li>
 </ul></li>
 </ul>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>billboard_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>                artist                    track date_entered  wk  rank
 0                2 Pac  Baby Don't Cry (Keep...   2000-02-26   1 87.00
 317              2 Pac  Baby Don't Cry (Keep...   2000-02-26   2 82.00
@@ -547,8 +547,8 @@ Note
 <li>결과가 <code>artist</code>와 <code>track</code>순으로 정렬되어 있는지 확인해 주세요!</li>
 <li>코드는 다음 예처럼 하나로 연결하여 간결하게 구성해보세요.</li>
 <li><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   billboard_long</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   .groupby(...)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   billboard_long.groupby(...)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   .size()</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   ...</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   .query(...)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -560,7 +560,7 @@ Note
 <ul>
 <li>5.1 먼저, 위 곡들만을 포함하도록 4번의 데이터와 원래 데이터(<code>billboard_long</code>)를 <code>merge()</code>를 이용해 추린 후, 50주 이상 머문 곡으로 필터링하세요.
 <ul>
-<li>4번을 구하지 못한 경우, 다음 <a href="https://www.dropbox.com/s/gv2wck15ba3h7ma/length_50wks.csv?dl=0">파일</a>을 받아 이용하세요.</li>
+<li>4번을 구하지 못한 경우, 다음 <a href="https://www.dropbox.com/s/fo1ous1xmsqiqj9/wks_50.csv?dl=1">파일</a>을 받아 이용하세요.</li>
 </ul></li>
 <li>5.2 <code>seaborn.objects</code>를 이용해 <strong>대략</strong> 다음과 같이 주에 따른 순위의 변화를 그려보세요. <img src="images/plot_ex1.png" class="img-fluid" width="540"></li>
 </ul>
@@ -596,7 +596,7 @@ Note
 <li>빠르게 1위가 된 곡일 수록 빠르게 차트에서 사라졌을까를 알아보기 위해, 7번의 결과를 이용해 다음과 같이 변형해보세요.</li>
 </ol>
 <ul>
-<li><p>7번을 구하지 못한 경우, 다음 <a href="https://www.dropbox.com/s/y1nyngm137xhw61/wk_rank.csv?dl=0">파일</a>을 받아 이용하세요.</p></li>
+<li><p>7번을 구하지 못한 경우, 다음 <a href="https://www.dropbox.com/s/8lrl7c2u5t34jiv/wk_rank.csv?dl=1">파일</a>을 받아 이용하세요.</p></li>
 <li><p>즉, 차트 진입시의 순위 정보와, 1위가 된 week의 정보만을 취해, 그 비율(<code>rate</code>)를 구하면, 얼마나 빠르게 1위가 되었는지 알 수 있습니다.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#                 artist                    track  wk  rank   rate</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 0              Aaliyah                Try Again  14 59.00   4.21</span></span>
