@@ -459,6 +459,7 @@ McKinney’s: 13. Data Analysis Examples</p>
 <li><code>movies</code>: 영화에 대한 정보</li>
 </ul>
 <p><img src="images/movielens.png" class="img-fluid" width="650"></p>
+<p>아래 데이터 링크가 원활하지 않을 시, 위의 MovieLens 1M movie ratings 사이트에 직접 다운받으세요.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>unames <span class="op">=</span> [<span class="st">"user_id"</span>, <span class="st">"gender"</span>, <span class="st">"age"</span>, <span class="st">"occupation"</span>, <span class="st">"zip"</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>users <span class="op">=</span> pd.read_table(</span>
@@ -609,7 +610,7 @@ McKinney’s: 13. Data Analysis Examples</p>
 <ul>
 <li>5번에서 구한 <code>popular_movies</code>에 한해 남녀 각각에 대해 영화별로 평점의 편차를 표준편차로 구해보고,
 <ul>
-<li>5번을 못 구한 경우, 다음 <a href="https://www.dropbox.com/s/q9vlkccdlwgkwhh/popular_movies.csv?dl=0">파일</a>을 다운로드 받아 <code>popular_movies</code>로 사용합니다.</li>
+<li>5번을 못 구한 경우, 다음 <a href="https://www.dropbox.com/s/f2qu13s9z6kv25f/popular_movies.csv?dl=1">파일</a>을 다운로드 받아 <code>popular_movies</code>로 사용합니다.</li>
 </ul></li>
 <li>남녀별로 편차 상위 2개만 표시합니다. (동등한 순서 모두 포함)
 <ul>
@@ -719,7 +720,7 @@ McKinney’s: 13. Data Analysis Examples</p>
 <li>50: “50-55”</li>
 <li>56: “56+”</li>
 </ul>
-<p>9번에서 데이터를 만들지 못한 경우 경우, 다음 .parquet <a href="https://www.dropbox.com/s/9fqz29ijxotnyod/movies_long_all.parquet?dl=0">파일</a>을 받아 이용해 다음 문제를 이어가세요.</p>
+<p>9번에서 데이터를 만들지 못한 경우 경우, 다음 .parquet <a href="https://www.dropbox.com/s/urchxe0n7g7w8np/movies_long_all.parquet?dl=1">파일</a>을 받아 이용해 다음 문제를 이어가세요.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pd.read_parquet(<span class="st">"data/movies_long_all.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>10.1 우선, 위에서 western 장르가 남녀의 평점 차이가 가장 크게 나타나 남성이 선호하는 것으로 보이는데 western 장르만 따로 떼어 나이대/남녀 별로 rating에 차이가 있는지 살펴봅니다.</p>
 <ul>
