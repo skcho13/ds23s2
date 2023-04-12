@@ -1,7 +1,6 @@
 /.quarto/
 
 # any files except docs directory
-*
-!docs/
+/contents
 
 
