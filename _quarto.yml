@@ -43,7 +43,7 @@ website:
       - section: Introduction
         contents:
           - href: contents/intro.qmd
-            text: Data Anlaysis Intro
+            text: Data Analysis Intro
           - href: contents/setup.ipynb
             text: Setup
           - section: contents/pandas.ipynb

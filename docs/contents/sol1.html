@@ -178,7 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/intro.html" class="sidebar-item-text sidebar-link">Data Anlaysis Intro</a>
+  <a href="../contents/intro.html" class="sidebar-item-text sidebar-link">Data Analysis Intro</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -458,7 +458,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell" data-execution_count="64">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Load Packages</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numerical calculation &amp; data frames</span></span>
@@ -474,7 +474,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="66">
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Options</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas options</span></span>
@@ -1359,16 +1359,16 @@ N956AT  47.65     34</code></pre>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>    mph <span class="op">=</span> <span class="kw">lambda</span> x: x.distance <span class="op">/</span> x.air_time <span class="op">*</span> <span class="dv">60</span></span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(flights, x<span class="op">=</span><span class="st">'distance'</span>)</span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.Hist(binwidth<span class="op">=</span><span class="dv">10</span>))</span>
 <span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <p><img src="sol1_files/figure-html/cell-53-output-1.png" width="599" height="445"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 같은 루트를 비행하는 항공편들 안에서 특이점이라면 의심해 볼만함...</span></span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>standardized <span class="op">=</span> (</span>
@@ -1377,7 +1377,7 @@ N956AT  47.65     34</code></pre>
 <span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
 <span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>standardized</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>    origin dest  air_time_mean  air_time_std     n
 0      EWR  ALB          31.79          3.08   418
 1      EWR  ANC         413.12         14.67     8
@@ -1390,36 +1390,38 @@ N956AT  47.65     34</code></pre>
 [224 rows x 5 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize(x):</span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (x <span class="op">-</span> x.mean()) <span class="op">/</span> x.std()</span>
 <span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>standardized_flights <span class="op">=</span> flights.copy()</span>
 <span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>standardized_flights[<span class="st">"air_time_z"</span>] <span class="op">=</span> flights.groupby([<span class="st">"origin"</span>, <span class="st">"dest"</span>])[<span class="st">"air_time"</span>].transform(normalize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>standardized_flights.nlargest(<span class="dv">5</span>, <span class="st">"air_time_z"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>standardized_flights.nsmallest(<span class="dv">5</span>, <span class="st">"air_time_z"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>        year  month  day  dep_time  sched_dep_time  dep_delay  arr_time   
-237716  2013      6   17   1652.00            1700      -8.00   1856.00  \
-244468  2013      6   24   1932.00            1920      12.00   2228.00   
-309910  2013      9    1   2237.00            1711     326.00     41.00   
-230885  2013      6   10   1356.00            1300      56.00   1646.00   
-248839  2013      6   29    755.00             800      -5.00   1035.00   
+216447  2013      5   25   1709.00            1700       9.00   1923.00  \
+251999  2013      7    2   1558.00            1513      45.00   1745.00   
+205388  2013      5   13   2040.00            2025      15.00   2225.00   
+64967   2013     11   10   2307.00            2250      17.00     34.00   
+157516  2013      3   23   1914.00            1910       4.00   2045.00   
 
-        sched_arr_time  arr_delay carrier  flight tailnum origin dest   
-237716            1815      41.00      US    2136  N967UW    LGA  BOS  \
-244468            2047     101.00      UA    1703  N37255    EWR  BOS   
-309910            1851     350.00      B6    1516  N346JB    JFK  SYR   
-230885            1414     152.00      US    2175  N745VJ    LGA  DCA   
-248839             909      86.00      B6    1491  N328JB    JFK  ACK   
+        sched_arr_time  arr_delay carrier  ...  tailnum origin dest air_time   
+216447            1937     -14.00      DL  ...   N666DN    LGA  ATL    65.00  \
+251999            1719      26.00      EV  ...   N17196    EWR  MSP    93.00   
+205388            2226      -1.00      EV  ...   N14568    EWR  GSP    55.00   
+64967                8      26.00      B6  ...   N317JB    JFK  BUF    38.00   
+157516            2043       2.00      EV  ...   N12567    EWR  BNA    70.00   
 
-        air_time  distance  hour  minute    mph  air_time_z  
-237716    107.00       184    17       0 103.18       14.78  
-244468    112.00       200    19      20 107.14       14.56  
-309910     97.00       209    17      11 129.28       13.87  
-230885    131.00       214    13       0  98.02       13.52  
-248839    141.00       199     8       0  84.68       12.17  </code></pre>
+        distance  hour  minute            time_hour    mph  air_time_z  
+216447       762    17       0  2013-05-25 17:00:00 703.38       -5.03  
+251999      1008    15      13  2013-07-02 15:00:00 650.32       -4.83  
+205388       594    20      25  2013-05-13 20:00:00 648.00       -4.72  
+64967        301    22      50  2013-11-10 22:00:00 475.26       -4.10  
+157516       748    19      10  2013-03-23 19:00:00 641.14       -4.07  
+
+[5 rows x 21 columns]</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="29">
