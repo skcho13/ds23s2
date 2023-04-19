@@ -85,8 +85,12 @@ website:
         contents:
           - href: contents/exercise1.ipynb
             text: Billboard
+            contents:
+              - href: contents/exercise1_sol.ipynb
           - href: contents/exercise2.ipynb
             text: MovieLens
+            contents:
+              - href: contents/exercise2_sol.ipynb
       - text: ---
       - section: Exploratory Data Analysis
         # contents: 
