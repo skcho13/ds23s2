@@ -7,7 +7,7 @@ project:
     - "!contents/ignore/"
     #- "!exercise*.ipynb"
     - "!contents/*.py"
-    - "!midterm.ipynb"
+    - "!midterm82397.ipynb"
   resources: CNAME
 
 website:
@@ -40,6 +40,10 @@ website:
     contents:
       - href: index.qmd
       - href: contents/notice.qmd
+      - text: ---
+      - href: https://docs.google.com/document/d/1s14dhjhIEhGr8m0eAxwZrmrihULqdS9Xxp4Vno07Dh4/edit?usp=sharing
+        text: 중간고사
+      - text: ---
       - section: Introduction
         contents:
           - href: contents/intro.qmd
@@ -93,9 +97,8 @@ website:
               - href: contents/exercise2_sol.ipynb
       - text: ---
       - section: Exploratory Data Analysis
-        # contents: 
-        #   - href: contents/eda.ipynb
-        #   - href: contents/midterm.ipynb
+        contents: 
+          - href: contents/eda.ipynb
       - text: ---
       - section: Modelling
         # contents:
