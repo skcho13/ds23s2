@@ -502,7 +502,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell" data-execution_count="52">
+<div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numerical calculation &amp; data frames</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -715,8 +715,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>binwidth=5</code>로 하고,</li>
 <li>x축의 범위는 <code>.limit(x=(0, 500))</code>으로 제한하세요.</li>
 </ul>
-<div class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <p><img src="midterm82397_files/figure-html/cell-31-output-1.png" width="599" height="445"></p>
 </div>
 </div>
@@ -731,8 +731,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li>대략 다음과 같은 테이블을 구합니다. 예를 들어, <code>user_id</code> 1번에게는 <code>rating</code> 5점이 그 사람의 표준화 점수로는 1.19점에 해당합니다.</li>
 </ul>
-<div class="cell" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>        user_id  movie_id  rating  timestamp  n_ratings  rating_z
 0             1      1193       5  978300760         53      1.19
 1             1       661       3  978302109         53     -1.75
@@ -785,8 +785,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>C-4 테이블에서 순위(<code>rank</code>)가 1인 영화들만을 추출하여</li>
 <li><code>pivot()</code>을 이용하여, 다음과 같이 장르(<code>genres</code>)별로 성별(<code>gender</code>)이 wide format으로 나타나도록, 그리고 영화제목(<code>title</code>)과 평점(<code>mean_rating_z</code>)이 각각 나타타도록 테이블을 구합니다. (MultiIndex)</li>
 </ul>
-<div class="cell" data-execution_count="44">
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>           title    mean_rating_z   
 gender         F  M             F  M
 genres                              
@@ -808,8 +808,8 @@ Western        .  .             .  .
 <section id="c-6.-이번에는-장르별-평점의-분포-차이를-살펴보는데" class="level4">
 <h4 class="anchored" data-anchor-id="c-6.-이번에는-장르별-평점의-분포-차이를-살펴보는데">C-6. 이번에는 장르별 평점의 분포 차이를 살펴보는데,</h4>
 <p>&nbsp;1) 장르별로 각 평점(1, 2, 3, 4, 5)을 몇 개 얻었는지 다음 테이블과 같이 구합니다. (5)</p>
-<div class="cell" data-execution_count="94">
-<div class="cell-output cell-output-display" data-execution_count="94">
+<div class="cell" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <pre><code>     genres  rating  n
 0    Action       1  .
 1    Action       2  .
@@ -825,8 +825,8 @@ Western        .  .             .  .
 </div>
 </div>
 <p>&nbsp;2) <strong>각 장르 내</strong>에서 각 평점이 몇 %를 차지하는지를 다음 테이블과 같이 구합니다. (5)</p>
-<div class="cell" data-execution_count="87">
-<div class="cell-output cell-output-display" data-execution_count="87">
+<div class="cell" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="33">
 <pre><code>     genres  rating  n pct
 0    Action       1  .   .
 1    Action       2  .   .
@@ -843,14 +843,11 @@ Western        .  .             .  .
 </div>
 <p>&nbsp;3) 이를 이용해 대략 다음과 같은 형태로 장르별 평점의 분포를 시각화합니다. (디테일은 무시) (10)</p>
 <ul>
-<li><strong>평점 5의 비율</strong>이 높은 순서대로 정렬되도록 합니다.
-<ul>
-<li><code>.scale(y=so.Nominal(order=...))</code> 이용해 정렬하세요.</li>
-</ul></li>
+<li><strong>평점 5의 비율</strong>이 높은 순서대로 정렬되도록 합니다.</li>
 <li>주의: <code>rating</code>의 dtype이 float이 아니어야, 5가지의 색(hue)으로 표현됩니다.</li>
 </ul>
-<div class="cell" data-execution_count="109">
-<div class="cell-output cell-output-display" data-execution_count="109">
+<div class="cell" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <p><img src="midterm82397_files/figure-html/cell-49-output-1.png" width="672" height="445"></p>
 </div>
 </div>
