@@ -7,7 +7,6 @@ project:
     - "!contents/ignore/"
     #- "!exercise*.ipynb"
     - "!contents/*.py"
-    - "!midterm82397.ipynb"
   resources: CNAME
 
 website:
@@ -35,7 +34,7 @@ website:
     #     text: "GitHub organization"
     style: "docked"
     search: true
-    collapse-level: 2
+    collapse-level: 1
     
     contents:
       - href: index.qmd
@@ -93,9 +92,9 @@ website:
             contents:
               - href: contents/exercise2_sol.ipynb
       - text: ---
-      - section: Exploratory Data Analysis
-        # contents: 
-        #   - href: contents/eda.ipynb
+      - section: contents/eda.ipynb
+        contents:
+          - href: contents/discretize.ipynb
       - text: ---
       - section: Modelling
         # contents:
