@@ -97,8 +97,8 @@ website:
           - href: contents/discretize.ipynb
       - text: ---
       - section: Modelling
-        # contents:
-        #   - href: contents/modelbasic.ipynb
+        contents:
+          - href: contents/modelbasic.ipynb
         #   - href: contents/modelling1.ipynb
         #   - href: contents/modelling2.ipynb
       - text: ---
