@@ -775,10 +775,10 @@ Tip
 <ul>
 <li>결측치인지 아닌지를 나타내는 명목변수를 이용</li>
 </ul>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> sm.datasets.get_rdataset(<span class="st">"flights"</span>, <span class="st">"nycflights13"</span>).data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> flights.assign(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    cancelled <span class="op">=</span> <span class="kw">lambda</span> x: x.dep_time.isna(),  <span class="co"># True/False</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    sched_hour <span class="op">=</span> <span class="kw">lambda</span> x: x.sched_dep_time <span class="op">//</span> <span class="dv">100</span>,</span>
@@ -786,12 +786,12 @@ Tip
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    sched_dep_time <span class="op">=</span> <span class="kw">lambda</span> x: x.sched_hour <span class="op">+</span> x.sched_min <span class="op">/</span> <span class="dv">60</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="133">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(flights, x<span class="op">=</span><span class="st">"sched_dep_time"</span>, color<span class="op">=</span><span class="st">"cancelled"</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.Hist(binwidth<span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>))</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="133">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <p><img src="eda_files/figure-html/cell-20-output-1.png" width="700" height="445"></p>
 </div>
 </div>
@@ -1374,9 +1374,9 @@ Code
 </div>
 <ul>
 <li>다이아몬드의 무게로 가격을 설명한 후 남은(residualized) 가격의 변량을 cut이 어떻게 예측하는가?</li>
-<li>다이아몬드의 무게로 설명되지(not acountable for) 않는 가격의 변량을 cut이 어떻게 예측하는가?</li>
+<li>다이아몬드의 무게로 설명되지(not acounted for) 않는 가격의 변량을 cut이 어떻게 예측하는가?</li>
 <li>다이아몬드의 무게가 가격에 미친 영향을 제거한 후, 혹은 그 영향을 넘어서서 (above and beyond) cut이 어떻게 가격을 예측하는가?</li>
-<li>다이아몬드의 무게(carat)가 동일하다면, 즉 무게 고정된다면 (hold it constant), 무게의 영향이 제거된 다이아몬드의 퀄리티(cut, …)에 따른 가격에 대한 관계가 나타날 것임.</li>
+<li>다이아몬드의 무게(carat)가 동일하다면, 즉 무게가 고정된다면 (hold it constant), 무게의 영향이 제거된 다이아몬드의 퀄리티(cut, …)에 따른 가격에 대한 관계가 나타날 것임.</li>
 </ul>
 <p>다음과 같이 다이아몬드의 무게를 비슷한 구간으로 나누어 살펴보면,</p>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -1481,24 +1481,15 @@ Code
 <span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
 </ul>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>houses_fit <span class="op">=</span> smf.ols(<span class="st">'price ~ livingArea'</span>, data <span class="op">=</span> houses).fit()</span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>houses <span class="op">=</span> houses.assign(</span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> houses_fit.fittedvalues,</span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> houses_fit.resid</span>
-<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sbcustom <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"price"</span>, color<span class="op">=</span><span class="st">"heating"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sbcustom <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"price"</span>, color<span class="op">=</span><span class="st">"heating"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <p><img src="eda_files/figure-html/cell-61-output-1.png" width="769" height="445"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"resid"</span>, color<span class="op">=</span><span class="st">"heating"</span>).limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">200000</span>, <span class="dv">200000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"resid"</span>, color<span class="op">=</span><span class="st">"heating"</span>).limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">200000</span>, <span class="dv">200000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <p><img src="eda_files/figure-html/cell-62-output-1.png" width="769" height="445"></p>
 </div>
