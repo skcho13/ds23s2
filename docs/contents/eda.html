@@ -513,7 +513,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Load Packages</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numerical calculation &amp; data frames</span></span>
@@ -529,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Options</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas options</span></span>
@@ -1409,28 +1409,32 @@ Code
 <h1>과제</h1>
 <p>Data on houses in Saratoga County, New York, USA in 2006</p>
 <p>더 큰 데이터셋은 다음을 참고: <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/overview">The Ames Housing dataset in Kaggle</a></p>
-<div class="cell" data-execution_count="382">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>houses_data <span class="op">=</span> sm.datasets.get_rdataset(<span class="st">"SaratogaHouses"</span>, <span class="st">"mosaicData"</span>)</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>houses <span class="op">=</span> houses_data.data <span class="co"># data</span></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print(houses_data.__doc__) # documents</span></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>houses</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="382">
-<pre><code>       price  lotSize  age  landValue  livingArea  pctCollege  bedrooms  \
-0     132500     0.09   42      50000         906          35         2   
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>       price  lotSize  age  landValue  livingArea  pctCollege  bedrooms   
+0     132500     0.09   42      50000         906          35         2  \
 1     181115     0.92    0      22300        1953          51         3   
 2     109000     0.19  133       7300        1944          51         4   
+3     155000     0.41   13      18700        1944          51         3   
 ...      ...      ...  ...        ...         ...         ...       ...   
+1724  285000     0.94   37      36200        2564          61         4   
 1725  194900     0.39    9      20400        1099          51         2   
 1726  125000     0.24   48      16800        1225          51         3   
 1727  111300     0.59   86      26000        1959          51         3   
 
-      fireplaces  bathrooms  rooms          heating      fuel  \
-0              1       1.00      5         electric  electric   
+      fireplaces  bathrooms  rooms          heating      fuel   
+0              1       1.00      5         electric  electric  \
 1              0       2.50      6  hot water/steam       gas   
 2              1       1.00      8  hot water/steam       gas   
+3              1       1.50      5          hot air       gas   
 ...          ...        ...    ...              ...       ...   
+1724           1       2.50     11  hot water/steam       gas   
 1725           0       1.00      3          hot air       gas   
 1726           1       1.00      7          hot air       gas   
 1727           0       1.00      6          hot air       gas   
@@ -1439,7 +1443,9 @@ Code
 0                septic         No              No         No  
 1                septic         No              No         No  
 2     public/commercial         No              No         No  
+3                septic         No              No         No  
 ...                 ...        ...             ...        ...  
+1724  public/commercial         No              No         No  
 1725  public/commercial         No              No         No  
 1726  public/commercial         No              No         No  
 1727             septic         No              No         No  
@@ -1475,16 +1481,26 @@ Code
 <span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
 </ul>
-<div class="cell" data-execution_count="439">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"price"</span>, color<span class="op">=</span><span class="st">"heating"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="439">
-<p><img src="eda_files/figure-html/cell-60-output-1.png" width="769" height="445"></p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>houses_fit <span class="op">=</span> smf.ols(<span class="st">'price ~ livingArea'</span>, data <span class="op">=</span> houses).fit()</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>houses <span class="op">=</span> houses.assign(</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> houses_fit.fittedvalues,</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> houses_fit.resid</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="440">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"resid"</span>, color<span class="op">=</span><span class="st">"heating"</span>).limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">200000</span>, <span class="dv">200000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="440">
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sbcustom <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"price"</span>, color<span class="op">=</span><span class="st">"heating"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <p><img src="eda_files/figure-html/cell-61-output-1.png" width="769" height="445"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>boxplot(houses, x<span class="op">=</span><span class="st">"centralAir"</span>, y<span class="op">=</span><span class="st">"resid"</span>, color<span class="op">=</span><span class="st">"heating"</span>).limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">200000</span>, <span class="dv">200000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<p><img src="eda_files/figure-html/cell-62-output-1.png" width="769" height="445"></p>
 </div>
 </div>
 
