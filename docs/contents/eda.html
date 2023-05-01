@@ -1470,8 +1470,8 @@ Code
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>houses_fit <span class="op">=</span> smf.ols(<span class="st">'price ~ livingArea'</span>, data <span class="op">=</span> houses).fit()</span>
 <span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>houses <span class="op">=</span> houses.assign(</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> houses_fit.predict(),</span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> <span class="kw">lambda</span> x: x.price <span class="op">-</span> x.pred</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> houses_fit.fittedvlaues,</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> houses_fit.resid</span>
 <span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
 </ul>
