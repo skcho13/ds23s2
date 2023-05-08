@@ -94,6 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../contents/modelling1.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -410,6 +411,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../contents/modelbasic.html" class="sidebar-item-text sidebar-link active">Model basics</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/modelling1.html" class="sidebar-item-text sidebar-link">Model building I</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -467,7 +473,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions">Interactions</a>
   <ul class="collapse">
   <li><a href="#continuous-and-categorical" id="toc-continuous-and-categorical" class="nav-link" data-scroll-target="#continuous-and-categorical">continuous and categorical</a></li>
+  <li><a href="#two-continuous" id="toc-two-continuous" class="nav-link" data-scroll-target="#two-continuous">Two continuous</a></li>
   </ul></li>
+  <li><a href="#other-model-families" id="toc-other-model-families" class="nav-link" data-scroll-target="#other-model-families">Other model families</a></li>
+  <li><a href="#learning-more-about-models" id="toc-learning-more-about-models" class="nav-link" data-scroll-target="#learning-more-about-models">Learning more about models</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -613,8 +622,8 @@ The goal of a model is not to uncover truth, but to discover a simple approximat
 [30 rows x 2 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell" data-execution_count="289">
+<div class="cell-output cell-output-display" data-execution_count="289">
 <p><img src="modelbasic_files/figure-html/cell-9-output-1.png" width="599" height="445"></p>
 </div>
 </div>
@@ -624,8 +633,8 @@ The goal of a model is not to uncover truth, but to discover a simple approximat
 <li>무수히 많은 <span class="math inline">\(a_1, a_2\)</span>의 값들 중 위 데이터에 가장 가까운 값을 찾음</li>
 <li>그 예로, 임의로 250개의 선형 모델을 그려보면,</li>
 </ul>
-<div class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell" data-execution_count="288">
+<div class="cell-output cell-output-display" data-execution_count="288">
 <p><img src="modelbasic_files/figure-html/cell-12-output-1.png" width="599" height="445"></p>
 </div>
 </div>
@@ -1241,6 +1250,7 @@ dtype: float64</code></pre>
 <section id="continuous-and-categorical" class="level3">
 <h3 class="anchored" data-anchor-id="continuous-and-categorical">continuous and categorical</h3>
 <p>연속변수와 범주형 변수가 서로 상호작용하는 경우: ex. 운동량이 건강(지표)에 미치는 효과: 혼자 vs.&nbsp;단체</p>
+<p>Data: <a href="https://www.dropbox.com/s/1ezcgjcmj6ibp5u/sim3.csv?dl=1">sim3.csv</a></p>
 <div class="cell" data-execution_count="186">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>sim3 <span class="op">=</span> pd.read_csv(<span class="st">"data/sim3.csv"</span>)</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>sim3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1403,9 +1413,152 @@ Fitted models
 <li>여기서는 직관적으로 어느 모델이 데이터의 패턴을 더 잘 잡아냈는지를 평가하는 것으로 충분</li>
 <li>interaction 항이 있는 모형이 더 나은 모형</li>
 </ul>
-
-
 </section>
+<section id="two-continuous" class="level3">
+<h3 class="anchored" data-anchor-id="two-continuous">Two continuous</h3>
+<p>두 연속변수 변수가 서로 상호작용하는 경우: ex. 강수량과 풍속이 항공편의 지연을 가중시킬 때</p>
+<p>Data: <a href="https://www.dropbox.com/s/k4vxozzhqfvrcmn/sim4.csv?dl=1">sim4.csv</a></p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>sim4 <span class="op">=</span> pd.read_csv(<span class="st">"data/sim4.csv"</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>sim4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>       x1    x2  rep     y
+0   -1.00 -1.00    1  4.25
+1   -1.00 -1.00    2  1.21
+2   -1.00 -1.00    3  0.35
+3   -1.00 -0.78    1 -0.05
+..    ...   ...  ...   ...
+296  1.00  0.78    3  1.52
+297  1.00  1.00    1  1.49
+298  1.00  1.00    2  3.79
+299  1.00  1.00    3 -4.12
+
+[300 rows x 4 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a grid of x1 and x2</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(product(</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>        np.linspace(sim4.x1.<span class="bu">min</span>(), sim4.x1.<span class="bu">max</span>(), <span class="dv">5</span>),</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>        np.linspace(sim4.x2.<span class="bu">min</span>(), sim4.x2.<span class="bu">max</span>(), <span class="dv">5</span>)</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>    )), columns<span class="op">=</span>[<span class="st">"x1"</span>, <span class="st">"x2"</span>]</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>      x1    x2
+0  -1.00 -1.00
+1  -1.00 -0.50
+2  -1.00  0.00
+3  -1.00  0.50
+..   ...   ...
+21  1.00 -0.50
+22  1.00  0.00
+23  1.00  0.50
+24  1.00  1.00
+
+[25 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="op">=</span> ols(<span class="st">'y ~ x1 + x2'</span>, data<span class="op">=</span>sim4).fit()</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>mod2 <span class="op">=</span> ols(<span class="st">'y ~ x1 * x2'</span>, data<span class="op">=</span>sim4).fit() <span class="co"># 같은 의미 'y ~ x1 + x2 + x1:x2'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"mod1"</span>] <span class="op">=</span>  mod1.predict(grid)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"mod2"</span>] <span class="op">=</span>  mod2.predict(grid)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>grid_long <span class="op">=</span> grid.melt(id_vars<span class="op">=</span>[<span class="st">"x1"</span>, <span class="st">"x2"</span>], var_name<span class="op">=</span><span class="st">"model"</span>, value_name<span class="op">=</span><span class="st">"pred"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>grid_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>      x1    x2 model  pred
+0  -1.00 -1.00  mod1  1.00
+1  -1.00 -0.50  mod1 -0.39
+2  -1.00  0.00  mod1 -1.79
+3  -1.00  0.50  mod1 -3.18
+..   ...   ...   ...   ...
+46  1.00 -0.50  mod2  2.77
+47  1.00  0.00  mod2  1.86
+48  1.00  0.50  mod2  0.94
+49  1.00  1.00  mod2  0.03
+
+[50 rows x 4 columns]</code></pre>
+</div>
+</div>
+<p>Regression plane for the model with interaction:<br>
+<img src="images/plot3d2.png" class="img-fluid" width="380"></p>
+<div class="cell quarto-layout-panel" data-execution_count="28">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-68-output-1.png" class="img-fluid" width="693"></p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-68-output-2.png" class="img-fluid" width="693"></p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>sim4[<span class="st">"mod1"</span>] <span class="op">=</span>  mod1.resid</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>sim4[<span class="st">"mod2"</span>] <span class="op">=</span>  mod2.resid</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>sim4_long <span class="op">=</span> sim4.melt(id_vars<span class="op">=</span>[<span class="st">"x1"</span>, <span class="st">"x2"</span>], value_vars<span class="op">=</span>[<span class="st">"mod1"</span>, <span class="st">"mod2"</span>], var_name<span class="op">=</span><span class="st">"model"</span>, value_name<span class="op">=</span><span class="st">"resid"</span>)</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>sim4_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>       x1    x2 model  resid
+0   -1.00 -1.00  mod1   3.25
+1   -1.00 -1.00  mod1   0.21
+2   -1.00 -1.00  mod1  -0.64
+3   -1.00 -0.78  mod1  -0.42
+..    ...   ...   ...    ...
+596  1.00  0.78  mod2   1.09
+597  1.00  1.00  mod2   1.47
+598  1.00  1.00  mod2   3.77
+599  1.00  1.00  mod2  -4.15
+
+[600 rows x 4 columns]</code></pre>
+</div>
+</div>
+<div class="cell quarto-layout-panel" data-execution_count="27">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-70-output-1.png" class="img-fluid" width="701"></p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelbasic_files/figure-html/cell-70-output-2.png" class="img-fluid" width="701"></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="other-model-families" class="level2">
+<h2 class="anchored" data-anchor-id="other-model-families">Other model families</h2>
+<p>지금까지 선형모델에 대해 다루었고, 선형모델을 확장한 다양한 모델들이 존재 선형모델에 대한 원리를 충분히 이해하고 나면, 데이터 분석가로서 다른 변형된 모델을 이해하고 마스터하는 것은 어렵지 않음</p>
+<ul>
+<li><strong>Generalised linear models</strong>: Linear models assume that the response is continuous and the error has a normal distribution. Generalised linear models extend linear models to include <em>non-continuous responses</em> (e.g.&nbsp;<strong>binary data or counts</strong>). They work by defining a distance metric based on the statistical idea of likelihood.</li>
+<li><strong>Generalised additive models</strong>, extend generalised linear models to incorporate arbitrary <em>smooth functions</em>. That means you can write a formula like&nbsp;<code>y ~ s(x)</code>&nbsp;which becomes an equation like&nbsp;<code>y = f(x)</code>&nbsp;and let&nbsp;<code>gam()</code>&nbsp;estimate what that function is (subject to some smoothness constraints to make the problem tractable).</li>
+<li><strong>Penalised linear models</strong>, add a penalty term to the distance that penalises complex models (as defined by the distance between the parameter vector and the origin). This tends to make models that generalise better to new datasets from the same population.</li>
+<li><strong>Robust linear models</strong>, tweak the distance to downweight points that are very far away. This makes them less sensitive to the presence of outliers, at the cost of being not quite as good when there are no outliers.</li>
+<li><strong>Trees</strong>, attack the problem in a completely different way than linear models. They fit a piece-wise constant model, splitting the data into progressively smaller and smaller pieces. Trees aren’t terribly effective by themselves, but they are very powerful when used in aggregate by models like&nbsp;<strong>random forests</strong> or&nbsp;<strong>gradient boosting machines</strong></li>
+</ul>
+</section>
+<section id="learning-more-about-models" class="level2">
+<h2 class="anchored" data-anchor-id="learning-more-about-models">Learning more about models</h2>
+<ul>
+<li><p><em><a href="https://www.statlearning.com/">An Introduction to Statistical Learning (2e)</a></em>&nbsp;by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani,&nbsp;(available online for free). (1판 번역서)</p>
+<p>This book presents a family of modern modelling techniques collectively known as statistical learning. For an even deeper understanding of the math behind the models, read the classic&nbsp;<em><a href="https://hastie.su.domains/ElemStatLearn/">Elements of Statistical Learning</a></em>&nbsp;by Trevor Hastie, Robert Tibshirani, and Jerome Friedman,&nbsp;(also available online for free).</p></li>
+<li><p><em><a href="http://appliedpredictivemodeling.com">Applied Predictive Modeling</a></em>&nbsp;by Max Kuhn and Kjell Johnson, (번역서)</p>
+<p>This book is a companion to the&nbsp;<strong>caret</strong> package and provides practical tools for dealing with real-life predictive modelling challenges.</p></li>
+<li><p><em><a href="https://dtkaplan.github.io/SM2-bookdown/preface-to-this-electronic-version.html">Statistical Modeling: A Fresh Approach (2e)</a></em> by Danny Kaplan, (available online for free).</p>
+<p>This book provides a gentle introduction to modelling, where you build your intuition, mathematical tools, and R skills in parallel. The book replaces a traditional “introduction to statistics” course, providing a curriculum that is up-to-date and relevant to data science.</p>
+<ul>
+<li><em><a href="https://mdsr-book.github.io/mdsr2e/">Modern Data Science with R (2e)</a></em> by Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton</li>
+</ul></li>
+</ul>
+
+
 </section>
 </section>
 
@@ -1557,6 +1710,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../contents/modelling1.html" class="pagination-link">
+        <span class="nav-page-text">Model building I</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
