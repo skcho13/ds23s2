@@ -100,7 +100,7 @@ website:
         contents:
           - href: contents/modelbasic.ipynb
           - href: contents/modelling1.ipynb
-        #   - href: contents/modelling2.ipynb
+          - href: contents/modelling2.ipynb
       - text: ---
       - section: Statistics
       - text: ---

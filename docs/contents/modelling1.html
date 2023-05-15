@@ -94,6 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../contents/modelling2.html" rel="next">
 <link href="../contents/modelbasic.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -416,6 +417,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../contents/modelling1.html" class="sidebar-item-text sidebar-link active">Model building I</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contents/modelling2.html" class="sidebar-item-text sidebar-link">Model building II</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -500,7 +506,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="21">
 <details>
 <summary>Load Packages</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numerical calculation &amp; data frames</span></span>
@@ -511,13 +517,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn.objects <span class="im">as</span> so</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sbcustom <span class="im">as</span> sbc</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sbcustom <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># statistics</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="23">
 <details>
 <summary>Options</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas options</span></span>
@@ -532,7 +538,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="why-are-low-quality-diamonds-more-expensive" class="level1">
 <h1>Why are low quality diamonds more expensive?</h1>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="op">=</span> sm.datasets.get_rdataset(<span class="st">"diamonds"</span>, <span class="st">"ggplot2"</span>).data</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cut, color, clarity 모두 categorical type으로 변형</span></span>
@@ -552,12 +558,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    ordered<span class="op">=</span><span class="va">True</span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="420">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cut <span class="op">=</span> sbc.rangeplot(diamonds, x<span class="op">=</span><span class="st">"cut"</span>, y<span class="op">=</span><span class="st">"price"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>color <span class="op">=</span> sbc.rangeplot(diamonds, x<span class="op">=</span><span class="st">"color"</span>, y<span class="op">=</span><span class="st">"price"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>clarity <span class="op">=</span> sbc.rangeplot(diamonds, x<span class="op">=</span><span class="st">"clarity"</span>, y<span class="op">=</span><span class="st">"price"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cut <span class="op">=</span> rangeplot(diamonds, x<span class="op">=</span><span class="st">"cut"</span>, y<span class="op">=</span><span class="st">"price"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>color <span class="op">=</span> rangeplot(diamonds, x<span class="op">=</span><span class="st">"color"</span>, y<span class="op">=</span><span class="st">"price"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>clarity <span class="op">=</span> rangeplot(diamonds, x<span class="op">=</span><span class="st">"clarity"</span>, y<span class="op">=</span><span class="st">"price"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell quarto-layout-panel" data-execution_count="421">
+<div class="cell quarto-layout-panel" data-execution_count="27">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="modelling1_files/figure-html/cell-7-output-1.png" class="img-fluid" width="599"></p>
@@ -610,7 +616,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>이 모형으로 잔차를 구하고,</li>
 <li>다이아몬드의 퀄리티와 이 잔차와의 관계를 살펴봄</li>
 </ol>
-<div class="cell" data-execution_count="424">
+<div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>diamonds2 <span class="op">=</span> diamonds.query(<span class="st">"carat &lt; 2.5"</span>).assign(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    lprice<span class="op">=</span><span class="kw">lambda</span> x: np.log2(x.price), </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    lcarat<span class="op">=</span><span class="kw">lambda</span> x: np.log2(x.carat)</span>
@@ -701,9 +707,9 @@ dtype: float64</code></pre>
 <li>이는 <strong>캐럿의 영향을 고려한 후에</strong>, 다이아몬드의 퀄리티 각각이 가격에 (상대적으로) 얼마나 영향을 주는지를 가늠할 수 있음</li>
 </ul>
 <div class="cell" data-execution_count="432">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cut <span class="op">=</span> sbc.rangeplot(diamonds2, x<span class="op">=</span><span class="st">"cut"</span>, y<span class="op">=</span><span class="st">"lresid"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>color <span class="op">=</span> sbc.rangeplot(diamonds2, x<span class="op">=</span><span class="st">"color"</span>, y<span class="op">=</span><span class="st">"lresid"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>clarity <span class="op">=</span> sbc.rangeplot(diamonds2, x<span class="op">=</span><span class="st">"clarity"</span>, y<span class="op">=</span><span class="st">"lresid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cut <span class="op">=</span> rangeplot(diamonds2, x<span class="op">=</span><span class="st">"cut"</span>, y<span class="op">=</span><span class="st">"lresid"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>color <span class="op">=</span> rangeplot(diamonds2, x<span class="op">=</span><span class="st">"color"</span>, y<span class="op">=</span><span class="st">"lresid"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>clarity <span class="op">=</span> rangeplot(diamonds2, x<span class="op">=</span><span class="st">"clarity"</span>, y<span class="op">=</span><span class="st">"lresid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell quarto-layout-panel" data-execution_count="433">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -797,18 +803,18 @@ dtype: float64</code></pre>
 <ul>
 <li>다이아몬드의 3가지 퀄리티와 carat이 모두 연관되어 있어, 각각의 고유한 효과를 보기 위해 다음과 같이 모든 예측변수들을 포함하는 모형을 세울 수 있음</li>
 </ul>
-<div class="cell" data-execution_count="81">
+<div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mod_full <span class="op">=</span> ols(<span class="st">'lprice ~ lcarat + cut + color + clarity'</span>, data<span class="op">=</span>diamonds2).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="82">
+<div class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame({<span class="st">"cut"</span>: [<span class="st">"Fair"</span>, <span class="st">"Good"</span>, <span class="st">"Very Good"</span>, <span class="st">"Premium"</span>, <span class="st">"Ideal"</span>]})</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"color"</span>] <span class="op">=</span> diamonds2.color.mode()[<span class="dv">0</span>]</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"clarity"</span>] <span class="op">=</span> diamonds2.clarity.mode()[<span class="dv">0</span>]</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"lcarat"</span>] <span class="op">=</span> diamonds2.lcarat.median()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="83">
+<div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="83">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>         cut color clarity  lcarat
 0       Fair     G     SI1   -0.51
 1       Good     G     SI1   -0.51
@@ -818,11 +824,11 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>즉, G 컬러이고, SI1의 투명도와, 로그 캐럿 -0.51 무게인 다이아몬드에 대해서, cut이 좋아질수록 가격이 얼마나 올라가는지를 예측해 본다면,</p>
-<div class="cell" data-execution_count="84">
+<div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"lpred"</span>] <span class="op">=</span> mod_full.predict(grid)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"pred"</span>] <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>grid.lpred</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="84">
+<div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>         cut color clarity  lcarat  lpred    pred
 0       Fair     G     SI1   -0.51  10.99 2035.36
 1       Good     G     SI1   -0.51  11.10 2202.21
@@ -837,36 +843,33 @@ dtype: float64</code></pre>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(marker<span class="op">=</span><span class="st">"o"</span>))</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    .limit(y<span class="op">=</span>(<span class="dv">1300</span>, <span class="dv">4100</span>))</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-execution_count="85">
+<div class="cell quarto-layout-panel" data-execution_count="33">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output cell-output-display quarto-layout-cell" data-execution_count="85" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output cell-output-display quarto-layout-cell" data-execution_count="33" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="modelling1_files/figure-html/cell-31-output-1.png" class="img-fluid" width="599"></p>
 </div>
 </div>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span>mod_full.params[<span class="dv">1</span>:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>cut[T.Good]        1.08
+cut[T.Very Good]   1.12
+cut[T.Premium]     1.15
+cut[T.Ideal]       1.17
+dtype: float64</code></pre>
 </div>
 </div>
 <p>cut 대신 color와 clarity에 대해서도 그려볼 것</p>
 <div class="cell quarto-layout-panel" data-execution_count="88">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="modelling1_files/figure-html/cell-34-output-1.png" class="img-fluid" width="599"></p>
+<p><img src="modelling1_files/figure-html/cell-36-output-1.png" class="img-fluid" width="599"></p>
 </div>
 <div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="modelling1_files/figure-html/cell-34-output-2.png" class="img-fluid" width="599"></p>
+<p><img src="modelling1_files/figure-html/cell-36-output-2.png" class="img-fluid" width="599"></p>
 </div>
-</div>
-</div>
-<div class="cell" data-execution_count="90">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span>mod_full.params[<span class="op">-</span><span class="dv">8</span>:<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="90">
-<pre><code>clarity[T.SI2]    1.50
-clarity[T.SI1]    1.77
-clarity[T.VS2]    2.06
-clarity[T.VS1]    2.20
-clarity[T.VVS2]   2.52
-clarity[T.VVS1]   2.71
-clarity[T.IF]     2.98
-dtype: float64</code></pre>
 </div>
 </div>
 <p>Residuals 분석</p>
@@ -1082,6 +1085,7 @@ Model evaluation: R-squared, RMSE, MAE
 </section>
 <section id="두-가지-관점" class="level1">
 <h1>두 가지 관점</h1>
+<p><img src="images/rsq.png" class="img-fluid" style="width:100.0%"></p>
 <section id="모델-파라미터의-해석" class="level2">
 <h2 class="anchored" data-anchor-id="모델-파라미터의-해석">모델 파라미터의 해석</h2>
 <p>변수와 변수간의 관계성에 초점</p>
@@ -1141,20 +1145,16 @@ dtype: float64</code></pre>
 <section id="fitted-모델의-예측-정확성과-특성" class="level2">
 <h2 class="anchored" data-anchor-id="fitted-모델의-예측-정확성과-특성">(fitted) 모델의 예측 정확성과 특성</h2>
 <p>Residuals의 분석</p>
-<p>변수의 개수가 증가하면, 즉 모델이 복잡할 수록 샘플에 대한 예측력은 높아짐.</p>
+<p>변수의 개수가 증가하면, 즉 모델이 복잡할수록 샘플에 대한 예측력은 높아짐.<br>
+반면, 변수들 간의 복잡한 correlation들이 모델의 해석에 오류를 가져올 수 있음.</p>
 <div class="cell" data-execution_count="101">
 <div class="cell-output cell-output-display" data-execution_count="101">
 <p><img src="modelling1_files/figure-html/cell-51-output-1.png" width="851" height="465"></p>
 </div>
 </div>
-<ul>
-<li>variance의 증가: Bias-Variance Tradeoff<br>
-<a href="https://www.vexpower.com/brief/biasvariance-tradeoff">Source</a></li>
-</ul>
-<p><img src="images/bias.png" class="img-fluid" width="800"></p>
-<ul>
-<li>반면, 변수들 간의 복잡한 correlation들이 모델의 해석에 오류를 가져올 수 있음.</li>
-</ul>
+<p><strong>Bias-Variance Tradeoff</strong></p>
+<p><img src="images/bias_variance.png" class="img-fluid" width="650"><br>
+Source: p.31, <em>An Introduction to Statistical Learning (2e) by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani</em></p>
 <hr>
 </section>
 </section>
@@ -1166,6 +1166,7 @@ dtype: float64</code></pre>
 <li>저자는 왜 아래와 같은 모형을 세웠을까?</li>
 <li>다음은 좋은 모형인가?</li>
 </ul>
+<p>Linear model: <code>arr_delay ~ hour + origin + carrier + season + dow</code></p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import the data</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> sm.datasets.get_rdataset(<span class="st">'flights'</span>, <span class="st">'nycflights13'</span>).data</span>
@@ -1227,8 +1228,19 @@ Tip
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out the flights to SFO</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>sfo <span class="op">=</span> flights.query(<span class="st">'dest == "SFO" &amp; arr_delay &lt; 500'</span>).copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="147">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> ols(<span class="st">"arr_delay ~ hour + origin + carrier + season + dow"</span>, data<span class="op">=</span>sfo).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> ols(<span class="st">"arr_delay ~ hour + origin + carrier + season + dow"</span>, data<span class="op">=</span>sfo).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell quarto-layout-panel" data-execution_count="7">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelling1_files/figure-html/cell-55-output-1.png" class="img-fluid" width="599"></p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="modelling1_files/figure-html/cell-55-output-2.png" class="img-fluid" width="599"></p>
+</div>
+</div>
 </div>
 
 
@@ -1389,6 +1401,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../contents/modelling2.html" class="pagination-link">
+        <span class="nav-page-text">Model building II</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
