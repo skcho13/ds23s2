@@ -101,6 +101,7 @@ website:
           - href: contents/modelbasic.ipynb
           - href: contents/modelling1.ipynb
           - href: contents/modelling2.ipynb
+          - href: contents/logistic.ipynb
       - text: ---
       - section: Statistics
       - text: ---
