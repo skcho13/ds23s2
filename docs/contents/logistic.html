@@ -462,7 +462,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#orginary-least-squares-ols" id="toc-orginary-least-squares-ols" class="nav-link active" data-scroll-target="#orginary-least-squares-ols">Orginary least squares (OLS)</a></li>
+  <li><a href="#ordinary-least-squares-ols" id="toc-ordinary-least-squares-ols" class="nav-link active" data-scroll-target="#ordinary-least-squares-ols">Ordinary least squares (OLS)</a></li>
   <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a>
   <ul>
   <li><a href="#emperical-probability-odds" id="toc-emperical-probability-odds" class="nav-link" data-scroll-target="#emperical-probability-odds">Emperical probability/ Odds</a></li>
@@ -516,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="95">
 <details>
 <summary>Load Packages</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numerical calculation &amp; data frames</span></span>
@@ -533,7 +533,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="97">
 <details>
 <summary>Options</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas options</span></span>
@@ -546,8 +546,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision <span class="op">=</span> <span class="dv">2</span>, suppress<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="orginary-least-squares-ols" class="level1">
-<h1>Orginary least squares (OLS)</h1>
+<section id="ordinary-least-squares-ols" class="level1">
+<h1>Ordinary least squares (OLS)</h1>
 <ul>
 <li><p>Mean function: <span class="math inline">\(E(Y | X = x_i) = \beta_0 + \beta_1 x_i\)</span></p></li>
 <li><p>Variance function: <span class="math inline">\(Var(Y | X = x_i) = \sigma^2\)</span></p></li>
@@ -567,10 +567,10 @@ Source: p.482, <em>Applied Multiple Regression/Correlation Analysis for the Beha
 <blockquote class="blockquote">
 <p>On July 4, 1999, a storm with winds exceeding 90 miles per hour hit the Boundary Waters Canoe Area Wilderness in northeastern Minnesota, causing serious damage to the forest. Rich et al.&nbsp;(2007) studied the effects of this storm using a very extensive ground survey of the area, determining status, either alive or dead, of more than 3600 trees.</p>
 </blockquote>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="98">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>blowdown <span class="op">=</span> pd.read_csv(<span class="st">'data/blowdown.csv'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>blowdown</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="98">
 <pre><code>         d    s  y         spp
 0     9.00 0.02  0  balsam fir
 1    14.00 0.02  0  balsam fir
@@ -585,15 +585,15 @@ Source: p.482, <em>Applied Multiple Regression/Correlation Analysis for the Beha
 [3666 rows x 4 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="99">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># black spruce에 제한하고, diameter d를 log2로 변환</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>blowbs <span class="op">=</span> blowdown.query(<span class="st">'spp == "black spruce"'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>blowbs[<span class="st">"d"</span>] <span class="op">=</span> np.floor(blowbs[<span class="st">"d"</span>])</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>blowbs[<span class="st">"log2d"</span>] <span class="op">=</span> np.log2(blowbs[<span class="st">"d"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="100">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>blowbs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="100">
 <pre><code>         d    s  y           spp  log2d
 17    9.00 0.02  0  black spruce   3.17
 24   11.00 0.03  0  black spruce   3.46
@@ -613,7 +613,7 @@ Source: p.482, <em>Applied Multiple Regression/Correlation Analysis for the Beha
 <li>Y를 0, 1로 coding하면; 1: event, 0: non-event</li>
 <li>Mean funtion <span class="math inline">\(E(Y | X = x_i)\)</span>을 생각하면 각 나무의 두께에 해당하는 쓰러진 나무의 비율, 즉 확률값으로 해석할 수 있음.</li>
 </ul>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="101">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(</span>
@@ -625,21 +625,21 @@ Source: p.482, <em>Applied Multiple Regression/Correlation Analysis for the Beha
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="101">
 <p><img src="logistic_files/figure-html/cell-8-output-1.png" width="753" height="465"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="102">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mod_ols <span class="op">=</span> ols(<span class="st">'y ~ d'</span>, data <span class="op">=</span> blowbs).fit()</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>mod_ols.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="102">
 <pre><code>Intercept   -0.16
 d            0.05
 dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="103">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>blowbs_plot <span class="op">=</span> blowbs.assign(resid <span class="op">=</span> mod_ols.resid)</span>
@@ -650,12 +650,12 @@ dtype: float64</code></pre>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    .label(title<span class="op">=</span><span class="st">'Residual Plot'</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="103">
 <p><img src="logistic_files/figure-html/cell-10-output-1.png" width="599" height="445"></p>
 </div>
 </div>
 <p>Distributions for d</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="104">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(</span>
@@ -666,7 +666,7 @@ dtype: float64</code></pre>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    .label(title<span class="op">=</span><span class="st">'d = </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="104">
 <p><img src="logistic_files/figure-html/cell-11-output-1.png" width="753" height="369"></p>
 </div>
 </div>
@@ -680,13 +680,13 @@ dtype: float64</code></pre>
 <li>사실, 이 <code>p</code>는 binary response (0, 1)의 conditional mean(평균)인데,</li>
 <li>통계적으로 표현하면 <span class="math inline">\(E(Y|d=d_i)\)</span>이며 선형모형의 mean function를 제공. (모형은 variance function과 함께 설정됨)</li>
 </ul>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="105">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn <span class="op">=</span> blowbs.groupby(<span class="st">"d"</span>)[<span class="st">"y"</span>].agg([(<span class="st">"died"</span>, <span class="st">"sum"</span>), (<span class="st">"m"</span>, <span class="st">"count"</span>), (<span class="st">"p"</span>, <span class="st">"mean"</span>)]).reset_index()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># blowbs_bn = blowbs_bn.assign(</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     p = (blowbs_bn.died + 0.1)/ (blowbs_bn.m + 0.2),  # 확률이 0이거나 1이 되는 것을 피하기 위해 작은 값을 추가</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>blowbs_bn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="105">
 <pre><code>       d  died   m    p
 0   5.00     7  90 0.08
 1   6.00     7  92 0.08
@@ -701,7 +701,7 @@ dtype: float64</code></pre>
 [25 rows x 4 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="106">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(</span>
@@ -715,7 +715,7 @@ dtype: float64</code></pre>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    .label(title<span class="op">=</span><span class="st">'Emperical Probability'</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="106">
 <p><img src="logistic_files/figure-html/cell-13-output-1.png" width="831" height="465"></p>
 </div>
 </div>
@@ -724,7 +724,7 @@ dtype: float64</code></pre>
 <li>1차보다는 고차 다항함수로 fit한다면?</li>
 </ul>
 <p>우선 d를 log2 변환해서 살펴보면,</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="107">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn[<span class="st">"log2d"</span>] <span class="op">=</span> np.log2(blowbs_bn[<span class="st">"d"</span>])</span>
@@ -739,12 +739,12 @@ dtype: float64</code></pre>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    .label(title<span class="op">=</span><span class="st">'Emperical Probability'</span>)</span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="107">
 <p><img src="logistic_files/figure-html/cell-14-output-1.png" width="831" height="465"></p>
 </div>
 </div>
 <p>만약, 이 proportion p (= died/m)를 log2d로 예측하는 모형을 만들어, 그 잔차를 살펴보면,</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="108">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mod_prob <span class="op">=</span> ols(<span class="st">'p ~ log2d'</span>, data <span class="op">=</span> blowbs_bn).fit()</span>
@@ -757,7 +757,7 @@ dtype: float64</code></pre>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    .label(title<span class="op">=</span><span class="st">'Residual Plot'</span>)</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="108">
 <p><img src="logistic_files/figure-html/cell-15-output-1.png" width="599" height="445"></p>
 </div>
 </div>
@@ -793,12 +793,12 @@ Important
 <p><img src="images/odds.png" class="img-fluid" width="400"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="109">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn <span class="op">=</span> blowbs_bn.assign(odds <span class="op">=</span> <span class="kw">lambda</span> x: x.p <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> x.p))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p = 1인 경우 odds가 무한대가 되므로 편의상 inf 값을 50으로 대체</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>blowbs_bn[<span class="st">"odds"</span>] <span class="op">=</span> blowbs_bn[<span class="st">"odds"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">50</span> <span class="cf">if</span> x <span class="op">==</span> np.inf <span class="cf">else</span> x)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>blowbs_bn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="109">
 <pre><code>       d  died   m    p  log2d  odds
 0   5.00     7  90 0.08   2.32  0.08
 1   6.00     7  92 0.08   2.58  0.08
@@ -820,16 +820,16 @@ Important
 <p><span class="math inline">\(\displaystyle logit(p):= log(odds) = log\left(\frac{p}{1-p}\right)\)</span><br>
 이 때, 예측모형은 <span class="math inline">\(\displaystyle log\left(\frac{\hat{p}}{1-\hat{p}}\right) = b_0 + b_1 \cdot log_{2}(d)\)</span></p>
 <p>즉, logit은 예측변수 <span class="math inline">\(x\)</span> 와 선형적으로 연결되는데 반해, 확률 <span class="math inline">\(p\)</span> 는 예측변수 <span class="math inline">\(x\)</span> 와 비선형적 관계를 맺음</p>
-<div class="cell" data-execution_count="18">
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell" data-execution_count="110">
+<div class="cell-output cell-output-display" data-execution_count="110">
 <p><img src="logistic_files/figure-html/cell-17-output-1.png" width="465" height="369"></p>
 </div>
 </div>
 <p>log odds값을 구해보면,</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="111">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn <span class="op">=</span> blowbs_bn.assign(log_odds <span class="op">=</span> <span class="kw">lambda</span> x: np.log(x.odds))</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>blowbs_bn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="111">
 <pre><code>       d  died   m    p  log2d  odds  log_odds
 0   5.00     7  90 0.08   2.32  0.08     -2.47
 1   6.00     7  92 0.08   2.58  0.08     -2.50
@@ -845,7 +845,7 @@ Important
 </div>
 </div>
 <p>정리하면, 아래와 같은 관측값들과 <strong>emperical probability/log odds</strong>을 함께 살펴보면,</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="112">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -871,7 +871,7 @@ Important
 </div>
 </div>
 <p>Logit 값을 추가해서 그리면,</p>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="113">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -917,11 +917,11 @@ Important
 <li>이항분포의 평균과 표준편차는 확률 p와 n에 의해 바뀜.</li>
 <li>관찰값은 이항분포로부터 발생했다고 가정함으로써, 실제 관찰값들의 randomness(잔차들)을 모형에 반영할 수 있음.</li>
 </ul>
-<p>참고: 이항분포<br>
+<p>참고: 이항분포 (Y: 사건의 횟수)<br>
 <img src="images/binomial.png" class="img-fluid" width="750"></p>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="114">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="114">
 <pre><code>     d  died   m    p  log2d  odds  log_odds
 0 5.00     7  90 0.08   2.32  0.08     -2.47
 1 6.00     7  92 0.08   2.58  0.08     -2.50
@@ -932,11 +932,11 @@ Important
 <p>각 likelihood는 관측치들이 모두 <strong>독립</strong>적으로 발생했다고 가정했을 때의 확률값이고,<br>
 모든 데이터가 관찰될 likelihood:<br>
 Lik = <span class="math inline">\(_{90}C_7 \cdot p_1^7 \cdot (1-p_1)^{83} \cdot _{92}C_7 \cdot p_2^7 \cdot (1-p_2)^{85} \cdot _{91}C_{18} \cdot p_3^{18} \cdot (1-p_3)^{73} \cdots\)</span></p>
-<p>이 때, 모형을 예측변수 x의 1차 다함함수로 fit한다면, &nbsp; <span class="math inline">\(\displaystyle log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 \cdot x\)</span> 인데,<br>
+<p>이 때, 모형을 예측변수 x의 1차 다항함수로 fit한다면, &nbsp; <span class="math inline">\(\displaystyle log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 \cdot x\)</span> 인데,<br>
 변형하면 &nbsp; <span class="math inline">\(\displaystyle p = \frac{1}{1+e^{-(\beta_0 + \beta_1 \cdot x)}}\)</span></p>
 <p>Lik <span class="math inline">\(\propto\)</span> <span class="math inline">\(\displaystyle \left(\frac{1}{1+e^{-(\beta_0 + \beta_1 \cdot 2.32)}}\right)^7 \cdot \left(1 - \frac{1}{1+e^{-(\beta_0 + \beta_1 \cdot 2.32)}}\right)^{83} \cdot \left(\frac{1}{1+e^{-(\beta_0 + \beta_1 \cdot 2.58)}}\right)^7 \cdot \left(\frac{1}{1+e^{-(\beta_0 + \beta_1 \cdot 2.58)}}\right)^{85} \cdots\)</span></p>
 <p>이 Likelihood를 최대가 되도록 <span class="math inline">\(\beta_0, \beta_1\)</span>의 추정치를 찾는 것이 Maximum Likelihood Estimation임.</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-execution_count="115">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> glm, logit</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Binomial response</span></span>
@@ -957,8 +957,8 @@ Model:                            GLM   Df Residuals:                      657
 Model Family:                Binomial   Df Model:                            1
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -328.95
-Date:                Wed, 31 May 2023   Deviance:                       657.90
-Time:                        02:48:44   Pearson chi2:                     679.
+Date:                Mon, 05 Jun 2023   Deviance:                       657.90
+Time:                        10:32:39   Pearson chi2:                     679.
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.2599
 Covariance Type:            nonrobust                                         
 ==============================================================================
@@ -974,10 +974,10 @@ log2d          2.2408      0.190     11.773      0.000       1.868       2.614
 <ul>
 <li>Perfect model의 likelihood: 1</li>
 </ul>
-<div class="cell" data-execution_count="854">
+<div class="cell" data-execution_count="116">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># deviance for an intercept only model</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mod.null_deviance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="854">
+<div class="cell-output cell-output-display" data-execution_count="116">
 <pre><code>856.2073760911842</code></pre>
 </div>
 </div>
@@ -987,7 +987,7 @@ log2d          2.2408      0.190     11.773      0.000       1.868       2.614
 <li>Nagelkerke’s Pseudo R-squared</li>
 </ul>
 <p>위 fitted model의 예측값들: fitted line</p>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-execution_count="117">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
@@ -1025,7 +1025,7 @@ log2d          2.2408      0.190     11.773      0.000       1.868       2.614
 <li>Odds: &nbsp; <span class="math inline">\(\displaystyle odds = \frac{\hat{p}}{1 - \hat{p}} = e^{b_0 + b_1 \cdot x}\)</span></li>
 <li>Log odds: &nbsp; <span class="math inline">\(\displaystyle logit = b_0 + b_1 \cdot x\)</span></li>
 </ul>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-execution_count="118">
 <details>
 <summary>code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn_pred <span class="op">=</span> blowbs_bn.assign(</span>
@@ -1035,7 +1035,7 @@ log2d          2.2408      0.190     11.773      0.000       1.868       2.614
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>blowbs_bn_pred.iloc[:, <span class="dv">1</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="118">
 <pre><code>    died   m    p  log2d  odds  log_odds  pred_prob  pred_odds  pred_logit
 0      7  90 0.08   2.32  0.08     -2.47       0.07       0.07       -2.61
 1      7  92 0.08   2.58  0.08     -2.50       0.12       0.13       -2.02
@@ -1055,7 +1055,9 @@ log2d          2.2408      0.190     11.773      0.000       1.868       2.614
 <li>Probabiliy: 태풍에 쓰러질 확률은 25%로 예측되며,</li>
 <li>Odds: 태풍에 쓰러지지 않을 가능성 대비 쓰러질 가능성의 비율은 1:0.33이므로 대략 3:1로 예측됨. 즉 다시 말하면, 1 그루가 쓰러진다면 3 그루는 쓰러지지 않을 것으로 예측함.
 <ul>
-<li>Odds가 1이면 sucess의 확률(p)이 0.5. Odds가 1보다 작으면 success의 확률(p)이 0.5보다 작고, Odds가 1보다 크면 success의 확률(p)이 0.5보다 큼.</li>
+<li>Odds가 1이면 event의 확률(p)이 0.5</li>
+<li>Odds가 1보다 작으면 event의 확률(p)이 0.5보다 작고,</li>
+<li>Odds가 1보다 크면 event의 확률(p)이 0.5보다 큼.</li>
 </ul></li>
 <li>Log odds (logit): 확률 p의 [0, 1]의 값을 무한한 값으로 늘려 linearly fit할 수 있게 함.</li>
 </ul>
@@ -1067,12 +1069,13 @@ log2d          2.2408      0.190     11.773      0.000       1.868       2.614
 <li><p><span class="math inline">\(\displaystyle odds: \frac{\hat{p}}{1 - \hat{p}} = e^{b_0 + b_1 \cdot x}=e^{b_0}\cdot e^{b_1 \cdot x}\)</span> &nbsp;로부터</p></li>
 <li><p><span class="math inline">\(x\)</span>가 1 증가할 때 odds의 비율: <span class="math inline">\(\displaystyle odds ~ratio: \frac{\frac{\hat{p_2}}{1 - \hat{p_2}}}{\frac{\hat{p_1}}{1 - \hat{p_1}}} = e^{b_1 \cdot (x+1) - b_1 \cdot x} = e^{b_1}\)</span></p></li>
 <li><p>즉, <span class="math inline">\(x\)</span>가 1 증가하면, odds가 “몇 배”로 증가하는지를 나타냄.</p></li>
-<li><p>따라서, odds ratio가 1보다 크면 (<span class="math inline">\(b_1\)</span>이 양수) <span class="math inline">\(x\)</span>가 1 증가할 때, event의 odds가 커지며, odds ratio가 1보다 작으면 (<span class="math inline">\(b_1\)</span>이 음수) event의 odds가 줄어듬.</p></li>
+<li><p>따라서, odds ratio가 1보다 크면 (<span class="math inline">\(b_1\)</span>이 양수) <span class="math inline">\(x\)</span>가 1 증가할 때, event의 odds가 커지며,</p></li>
+<li><p>odds ratio가 1보다 작으면 (<span class="math inline">\(b_1\)</span>이 음수) event의 odds가 줄어듬.</p></li>
 </ul>
-<p>위의 경우, <span class="math inline">\(\displaystyle odds = e^{-7.82 + 2.24 \cdot log_2(d)}\)</span> 이므로 odds ratio = <span class="math inline">\(e^{2.24} = 9.4\)</span></p>
+<p>위의 경우, <span class="math inline">\(\displaystyle \widehat{odds} = e^{-7.82 + 2.24 \cdot log_2(d)}\)</span> 이므로 odds ratio = <span class="math inline">\(e^{2.24} = 9.4\)</span></p>
 <ul>
-<li>해석하면, 나무의 두께가 1 (log2 scale로) 늘어남에 따라 태풍에 나무가 쓰러질 odds가 9.4배 증가함</li>
-<li>다시 말하면, 나무의 두께가 1 (log2 scale로) 늘어남에 따라 태풍에 나무가 쓰러지지 않을 가능성 대비 쓰러질 가능성이 9.4배 증가함.</li>
+<li>해석하면, 나무의 두께가 (log2 scale로) 1 늘어남 (2배 증가)에 따라 태풍에 나무가 쓰러질 odds가 9.4배 증가함</li>
+<li>다시 말하면, 나무의 두께가 (log2 scale로) 1 늘어남 (2배 증가)에 따라 태풍에 나무가 쓰러지지 않을 가능성 대비 쓰러질 가능성이 9.4배 증가함.</li>
 <li>나무의 두께 (원래 d)로 말하면, 두께가 10% 두꺼워지면, <span class="math inline">\(e^{2.24 \cdot log_2(1.1)}=1.36\)</span> 배, 즉 odds가 36% 증가함.</li>
 </ul>
 <p><span class="math inline">\(b_0\)</span>: d = 1일 때의 odds: <span class="math inline">\(\displaystyle e^{-7.82 + 2.34 \cdot 0} = e^{-7.82} = 0.004\)</span>, 즉 두께가 1cm 일 때 태풍에 나무가 쓰러지지 않을 가능성 대비 쓰러질 가능성은 0.004임.</p>
@@ -1116,7 +1119,7 @@ Important
 </div>
 <p><strong>Binomial response</strong>에 대해 residual들을 살펴보면,<br>
 <code>glm('died + I(m-died) ~ log2d', data=blowbs_bn, family=sm.families.Binomial())</code></p>
-<div class="cell" data-execution_count="26">
+<div class="cell" data-execution_count="119">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>blowbs_bn_resid <span class="op">=</span> blowbs_bn.assign(</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    prob_pred <span class="op">=</span> mod_bn.fittedvalues,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    died_pred <span class="op">=</span> <span class="kw">lambda</span> x: x.prob_pred <span class="op">*</span> x.m,</span>
@@ -1125,7 +1128,7 @@ Important
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    deviance_resid <span class="op">=</span> mod_bn.resid_deviance,</span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>blowbs_bn_resid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="119">
 <pre><code>       d  died   m    p  log2d  odds  log_odds  prob_pred  died_pred   
 0   5.00     7  90 0.08   2.32  0.08     -2.47       0.07       6.15  \
 1   6.00     7  92 0.08   2.58  0.08     -2.50       0.12      10.74   
@@ -1151,31 +1154,31 @@ Important
 [25 rows x 12 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
+<div class="cell" data-execution_count="120">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(blowbs_bn_resid, x<span class="op">=</span><span class="st">'log2d'</span>, y<span class="op">=</span><span class="st">'pearson_resid'</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dot())</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Dot(color<span class="op">=</span><span class="st">"orangered"</span>, alpha<span class="op">=</span><span class="fl">.5</span>), y <span class="op">=</span> <span class="st">'deviance_resid'</span>)</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    .label(y<span class="op">=</span><span class="st">"Pearson / Deviance Residuals"</span>)</span>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="120">
 <p><img src="logistic_files/figure-html/cell-27-output-1.png" width="599" height="445"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-execution_count="121">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(blowbs_bn_resid, x<span class="op">=</span><span class="st">'prob_pred'</span>, y<span class="op">=</span><span class="st">'p'</span>,)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dot())</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(color<span class="op">=</span><span class="st">".6"</span>), y <span class="op">=</span> <span class="st">'prob_pred'</span>) <span class="co"># y = x line</span></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    .label(x<span class="op">=</span><span class="st">"Predicted Probability"</span>, y<span class="op">=</span><span class="st">"Emperical Probability"</span>)</span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="121">
 <p><img src="logistic_files/figure-html/cell-28-output-1.png" width="598" height="445"></p>
 </div>
 </div>
 <p><strong>Binary response</strong>에 대해 residual들을 살펴보면,<br>
 <code>glm('y ~ log2d', data=blowbs, family=sm.families.Binomial())</code></p>
-<div class="cell" data-execution_count="29">
+<div class="cell" data-execution_count="122">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>blowbs_resid <span class="op">=</span> blowbs.assign(</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    prob_pred <span class="op">=</span> mod.fittedvalues,</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    prob_resid <span class="op">=</span> mod.resid_response,</span>
@@ -1183,7 +1186,7 @@ Important
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    deviance_resid <span class="op">=</span> mod.resid_deviance</span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>blowbs_resid.sort_values(<span class="st">"d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell-output cell-output-display" data-execution_count="122">
 <pre><code>         d    s  y           spp  log2d  prob_pred  prob_resid  pearson_resid   
 2102  5.00 0.45  0  black spruce   2.32       0.07       -0.07          -0.27  \
 724   5.00 0.18  0  black spruce   2.32       0.07       -0.07          -0.27   
@@ -1209,7 +1212,7 @@ Important
 [659 rows x 9 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="30">
+<div class="cell" data-execution_count="123">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(blowbs_resid, x<span class="op">=</span><span class="st">'log2d'</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    .pair(y<span class="op">=</span>[<span class="st">"prob_resid"</span>, <span class="st">"pearson_resid"</span>, <span class="st">"deviance_resid"</span>])</span>
@@ -1217,7 +1220,7 @@ Important
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.PolyFit(<span class="dv">5</span>))</span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">8</span>))</span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="123">
 <p><img src="logistic_files/figure-html/cell-30-output-1.png" width="465" height="753"></p>
 </div>
 </div>
@@ -1234,7 +1237,7 @@ code
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>blowbs_resid[<span class="st">"y2"</span>] <span class="op">=</span> blowbs_resid.y.<span class="bu">map</span>({<span class="dv">0</span>: <span class="st">"survived"</span>, <span class="dv">1</span>: <span class="st">"died"</span>})</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>blowbs_resid[<span class="st">"y2"</span>] <span class="op">=</span> blowbs_resid.y.<span class="bu">map</span>({<span class="dv">0</span>: <span class="st">"survived(y=0)"</span>, <span class="dv">1</span>: <span class="st">"died(y=1)"</span>})</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    so.Plot(blowbs_resid, x<span class="op">=</span><span class="st">'prob_pred'</span>)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Bars(), so.Hist())</span>
@@ -1244,8 +1247,8 @@ code
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="31">
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell" data-execution_count="124">
+<div class="cell-output cell-output-display" data-execution_count="124">
 <p><img src="logistic_files/figure-html/cell-31-output-1.png" width="656" height="369"></p>
 </div>
 </div>
@@ -1316,14 +1319,14 @@ Important
 <div class="callout-body-container callout-body">
 <p>예측된 확률을 기반으로 binary outcome으로 예측하여, 모형의 예측력을 평가</p>
 <ul>
-<li>예측된 확률값에 대해 임계치를 정하여, 예를 들어 0.5보다 크면 1, 0.5보다 작으면 0으로 binary 예측값과 실제값을 비교하여, 예측력을 평가</li>
+<li>예측된 확률값에 대해 임계치를 정하여, 예를 들어 0.5보다 크면 1, 0.5보다 작으면 0으로 분류하여, 이 binary 예측값과 실제값을 비교하여, 예측력을 평가</li>
 <li>Confusion matrix</li>
 <li>ROC curve</li>
 <li>ROC area (AUC) = Concordance ratio</li>
 </ul>
 </div>
 </div>
-<div class="cell" data-execution_count="202">
+<div class="cell" data-execution_count="33">
 <div class="cell-output cell-output-display">
 <p><img src="logistic_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
 </div>
@@ -1388,15 +1391,15 @@ Important
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="195">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mod_lg <span class="op">=</span> logit(<span class="st">'y ~ log2d'</span>, data<span class="op">=</span>blowbs).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mod_lg <span class="op">=</span> logit(<span class="st">'y ~ log2d'</span>, data<span class="op">=</span>blowbs).fit() <span class="co"># logit has .pred_table() method</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
          Current function value: 0.499165
          Iterations 6</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="198">
+<div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy rate with threshold 0.3</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> mod_lg.pred_table(<span class="fl">0.3</span>) <span class="co"># confusion matrix</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>display(cm)</span>
@@ -1405,11 +1408,11 @@ Important
 <pre><code>array([[298., 128.],
        [ 45., 188.]])</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="198">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>0.7374810318664643</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="194">
+<div class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy rate with threshold 1: no information</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> mod_lg.pred_table(<span class="dv">1</span>) <span class="co"># confusion matrix</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>display(cm)</span>
@@ -1418,17 +1421,22 @@ Important
 <pre><code>array([[426.,   0.],
        [233.,   0.]])</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="194">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <pre><code>0.6464339908952959</code></pre>
 </div>
 </div>
-<p>ROC Curve</p>
-<p>잘못된 예측에 대한 비용이 다르다면, 임계치를 조정하여, 잘못된 예측에 대한 비용을 줄일 수 있음</p>
-<p>만약, 농작물에 대한 피해라고 가정하면,</p>
+<p>옳은 예측의 비율</p>
 <ul>
-<li>Costs: 농작물 피해, 펜스 설치비</li>
-<li>Benefits: 수확물의 가치</li>
+<li>True positive rate (TPR) | sensitivity: <span class="math inline">\(\displaystyle P(\hat{y}=1 ~| ~y = 1)\)</span></li>
+<li>True negative rate (TNR) | specificity: <span class="math inline">\(\displaystyle P(\hat{y}=0 ~| ~y = 0)\)</span></li>
 </ul>
+<p>틀린 예측의 비율</p>
+<ul>
+<li>거짓 양성, False positive rate (FPR): <span class="math inline">\(\displaystyle P(\hat{y}=1 ~| ~y = 0)\)</span> = 1 - TNR</li>
+<li>거짓 음성, False negative rate (FNR): <span class="math inline">\(\displaystyle P(\hat{y}=0 ~| ~y = 1)\)</span> = 1 - TPR</li>
+</ul>
+<p>Receiver operating characteristic (ROC) curve</p>
+<p>예측된 확률에 대한 임계치를 조정함에 따라 옳은 예측과 틀린 예측의 비율이 어떻게 달라지는지 살펴봄으로써 임계치를 설정하는데 도움을 줌</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1447,68 +1455,78 @@ code
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>roc <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"thresholds"</span>: thresholds.<span class="bu">round</span>(<span class="dv">2</span>),</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"False_Pos"</span>: fpr,</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"specificity(True_Neg)"</span>: <span class="dv">1</span> <span class="op">-</span> fpr,</span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sensitivity(True_Pos)"</span>: tpr,</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"False Pos"</span>: fpr,</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sensitivity(True Pos)"</span>: tpr,</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"specificity(True Neg)"</span>: <span class="dv">1</span> <span class="op">-</span> fpr,</span>
 <span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>roc.sort_values(<span class="st">"thresholds"</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="188">
-<div class="cell-output cell-output-display" data-execution_count="188">
-<pre><code>    thresholds  False_Pos  specificity(True_Neg)  sensitivity(True_Pos)
-25        0.07       1.00                   0.00                   1.00
-24        0.12       0.81                   0.19                   0.97
-23        0.18       0.61                   0.39                   0.94
-22        0.25       0.43                   0.57                   0.86
-21        0.33       0.30                   0.70                   0.81
-20        0.41       0.22                   0.78                   0.74
-19        0.48       0.15                   0.85                   0.64
-18        0.55       0.12                   0.88                   0.54
-17        0.62       0.09                   0.91                   0.48
-16        0.67       0.08                   0.92                   0.38</code></pre>
+<div class="cell" data-execution_count="90">
+<div class="cell-output cell-output-display" data-execution_count="90">
+<pre><code>    thresholds  False Pos  sensitivity(True Pos)  specificity(True Neg)
+25        0.07       1.00                   1.00                   0.00
+24        0.12       0.81                   0.97                   0.19
+23        0.18       0.61                   0.94                   0.39
+22        0.25       0.43                   0.86                   0.57
+..         ...        ...                    ...                    ...
+19        0.48       0.15                   0.64                   0.85
+18        0.55       0.12                   0.54                   0.88
+17        0.62       0.09                   0.48                   0.91
+16        0.67       0.08                   0.38                   0.92
+
+[10 rows x 4 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="209">
-<div class="cell-output cell-output-display" data-execution_count="209">
+<div class="cell" data-execution_count="91">
+<div class="cell-output cell-output-display" data-execution_count="91">
 <p><img src="logistic_files/figure-html/cell-42-output-1.png" width="659" height="465"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="212">
-<div class="cell-output cell-output-display" data-execution_count="212">
+<div class="cell" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="43">
 <p><img src="logistic_files/figure-html/cell-43-output-1.png" width="659" height="465"></p>
 </div>
 </div>
-<p>AUC: Area Under the Curve = Concordance rate</p>
+<p>AUC: Area Under the Curve = concordance index</p>
 <ul>
-<li>모형 전반에 대한 평가</li>
+<li>AUC: 각 specificity값에 대한 sensitivity의 합 &gt;&gt; 모형 예측력에 대한 전반적 평가</li>
+<li>Concordance index(c): 모든 Y의 쌍, 예를 들어 <span class="math inline">\((0_i, 1_j)\)</span>에 대해서 해당하는 예측된 확률의 크기가 <span class="math inline">\(p_i &lt; p_j\)</span> 인 비율, 즉 순서가 맞는(concordance) 비율</li>
 <li>잘못된 예측에 대한 비용이 다르다면, 특정 임계치를 선택</li>
 </ul>
-<div class="cell" data-execution_count="186">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score, auc</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>roc_auc <span class="op">=</span> roc_auc_score(blowbs_resid.y, blowbs_resid.prob_pred)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>roc_auc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="186">
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>roc_auc  <span class="co"># auc(fpr, tpr)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="70">
 <pre><code>0.8161306897177054</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="77">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(blowbs.y, blowbs_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              precision    recall  f1-score   support
-
-           0       0.87      0.70      0.78       426
-           1       0.59      0.81      0.68       233
-
-    accuracy                           0.74       659
-   macro avg       0.73      0.75      0.73       659
-weighted avg       0.77      0.74      0.74       659
-</code></pre>
-</div>
-</div>
+<p>Classifier로서 전반적인 모형의 성능 vs.&nbsp;특정 임계치에서의 모형의 성능 vs.&nbsp;확률모형</p>
+<ul>
+<li>잘못된 예측에 대한 비용이 다르다면, 임계치를 조정하여, 잘못된 예측에 대한 비용을 줄일 수 있음</li>
+<li>만약, 농작물에 대한 피해라고 가정하면,
+<ul>
+<li>Costs: 농작물 피해, 펜스 설치비</li>
+<li>Benefits: 수확물의 가치</li>
+<li>거짓 음성을 낮춰야 하는 경우: 예를 들어, 농작물의 작은 피해도 심각한 결과를 초래하는 경우</li>
+<li>거짓 양성을 낮춰야 하는 경우: 예를 들어, 농작물의 피해 예방을 위한 비용이 큰 경우</li>
+</ul></li>
+<li>만약, 와인 셀러가 와인의 품질(high:양성 vs.&nbsp;low:음성)을 예측하는 모형을 만든다면, (in <em>Stefanie Molin</em>’s book)
+<ul>
+<li>Costs: 높은 품질의 와인을 낮은 품질로 예측하면, 와인 품평가에게 신뢰를 잃을 수 있음</li>
+<li>Benefits: 낮은 품질의 와인을 높은 품질로 예측하면, 낮은 품질의 와인을 높은 가격에 팔아 수익으로 이어질 수 있음</li>
+<li>거짓 음성을 낮춰야 하는 경우: 예를 들어, 영세한 와이너리가 수익이 중요한 경우</li>
+<li>거짓 양성을 낮춰야 하는 경우: 예를 들어, 고품질의 와인을 생산하는 것으로 유명한 와이너리; 네임밸류를 유지하기 위해. 반면, 비싼 와인이 싸게 팔리는 것은 감당할 수 있음.</li>
+</ul></li>
+<li>확률을 정확히 예측하는 모형의 추구;
+<ul>
+<li>확률값으로 communicate</li>
+<li>Decision maker는 당사자</li>
+</ul></li>
+</ul>
 </section>
 </section>
 <section id="logistic-regression-정리" class="level2">
@@ -1526,9 +1544,9 @@ weighted avg       0.77      0.74      0.74       659
 <li><span class="math inline">\(\Phi\)</span>: cumulative standard normal distribution function</li>
 </ul></li>
 </ul>
-<div class="cell" data-execution_count="368">
+<div class="cell">
 <div class="cell-output cell-output-display" data-execution_count="368">
-<p><img src="logistic_files/figure-html/cell-54-output-1.png" width="465" height="369"></p>
+<p><img src="logistic_files/figure-html/cell-56-output-1.png" width="465" height="369"></p>
 </div>
 </div>
 <p>위의 아이디어는 generalized linear model (GLM)로 확장되는데,</p>
@@ -1551,16 +1569,17 @@ weighted avg       0.77      0.74      0.74       659
 <li>나무의 두께(<code>d</code>)에 따라 태풍에 쓰러질(<code>y</code>) 확률이 두 종에서 큰 차이를 보이는지 살펴보고,</li>
 <li>그렇다면, 이를 interaction term으로 모형에 추가하여 분석해보세요.
 <ul>
-<li>모형의 파라미터를 해석해보고,</li>
-<li>모형의 예측력에 대해서도 살펴보세요.</li>
+<li>나무에 따른 확률 예측값을 그려보고 비교해보세요.</li>
+<li>나무에 따라, 나무가 10% 두꺼워지면(<code>d</code>) 쓰러질 odds ratio(OR)가 얼마나 증가하는지 파라미터를 통해 구해보고,</li>
+<li>모형의 예측력에 대해서도 1) 확률 측면, 2) binary class 측면에서 살펴보세요.</li>
 </ul></li>
 </ul>
-<div class="cell" data-execution_count="496">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>blow2 <span class="op">=</span> blowdown.query(<span class="st">'spp in ["black spruce", "aspen"]'</span>)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>blow2[<span class="st">"d"</span>] <span class="op">=</span> np.floor(blow2[<span class="st">"d"</span>])</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>blow2[<span class="st">"log2d"</span>] <span class="op">=</span> np.log2(blow2[<span class="st">"d"</span>])</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>blow2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="496">
+<div class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>blow2 <span class="op">=</span> blowdown.query(<span class="st">'spp in ["black spruce", "aspen"]'</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>blow2[<span class="st">"d"</span>] <span class="op">=</span> np.floor(blow2[<span class="st">"d"</span>])</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>blow2[<span class="st">"log2d"</span>] <span class="op">=</span> np.log2(blow2[<span class="st">"d"</span>])</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>blow2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="58">
 <pre><code>         d    s  y           spp  log2d
 17    9.00 0.02  0  black spruce   3.17
 24   11.00 0.03  0  black spruce   3.46
@@ -1573,6 +1592,24 @@ weighted avg       0.77      0.74      0.74       659
 3661  8.00 0.98  1  black spruce   3.00
 
 [1095 rows x 5 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>blow2_bn <span class="op">=</span> blow2.groupby([<span class="st">"log2d"</span>, <span class="st">"spp"</span>])[<span class="st">"y"</span>].agg([(<span class="st">"died"</span>, <span class="st">"sum"</span>), (<span class="st">"m"</span>, <span class="st">"count"</span>), (<span class="st">"p"</span>, <span class="st">"mean"</span>)]).reset_index()</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>blow2_bn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="59">
+<pre><code>    log2d           spp  died   m    p
+0    2.32         aspen     0   2 0.00
+1    2.32  black spruce     7  90 0.08
+2    2.58         aspen     1   2 0.50
+3    2.58  black spruce     7  92 0.08
+..    ...           ...   ...  ..  ...
+66   5.61         aspen     1   1 1.00
+67   5.67         aspen     0   1 0.00
+68   5.75         aspen     1   1 1.00
+69   5.81         aspen     0   1 0.00
+
+[70 rows x 5 columns]</code></pre>
 </div>
 </div>
 </section>
@@ -1606,7 +1643,7 @@ F. 4 hours per day (4)<br>
 G. 5 or more hours per day (5)</p>
 <p><code>bmipct</code></p>
 <p>The percentile for a given BMI for members of the same sex.</p>
-<div class="cell" data-execution_count="423">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>diet <span class="op">=</span> pd.read_csv(<span class="st">"data/diet.csv"</span>)</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>diet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="423">
@@ -1630,9 +1667,9 @@ G. 5 or more hours per day (5)</p>
 <li>모형의 파라미터를 해석한 후</li>
 <li>모형의 예측력을 파악하기 위해 위에서 다룬 몇 가지 방식으로 평가하세요.</li>
 </ul>
-<div class="cell" data-execution_count="438">
+<div class="cell">
 <div class="cell-output cell-output-display" data-execution_count="438">
-<p><img src="logistic_files/figure-html/cell-57-output-1.png" width="760" height="445"></p>
+<p><img src="logistic_files/figure-html/cell-60-output-1.png" width="760" height="445"></p>
 </div>
 </div>
 <ul>
@@ -1640,27 +1677,30 @@ G. 5 or more hours per day (5)</p>
 <li><code>pd.qcut</code>을 이용</li>
 <li>Log가 0이 안되도록 적당히 조정하거나 값을 제거할 것.</li>
 </ul>
-<div class="cell" data-execution_count="460">
+<div class="cell">
 <div class="cell-output cell-output-display" data-execution_count="460">
-<p><img src="logistic_files/figure-html/cell-59-output-1.png" width="713" height="445"></p>
+<p><img src="logistic_files/figure-html/cell-62-output-1.png" width="713" height="445"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="480">
+<div class="cell">
 <div class="cell-output cell-output-display" data-execution_count="480">
-<p><img src="logistic_files/figure-html/cell-60-output-1.png" width="760" height="445"></p>
+<p><img src="logistic_files/figure-html/cell-63-output-1.png" width="760" height="445"></p>
 </div>
 </div>
 <ul>
 <li>티비 시청시간(<code>media</code>)을 discrete하게 보고 각 시간 구간에서 emperical logit을 구해 살펴볼 것</li>
 </ul>
-<div class="cell" data-execution_count="468">
+<div class="cell">
 <div class="cell-output cell-output-display" data-execution_count="468">
-<p><img src="logistic_files/figure-html/cell-62-output-1.png" width="713" height="445"></p>
+<p><img src="logistic_files/figure-html/cell-65-output-1.png" width="713" height="445"></p>
 </div>
 </div>
 <p>다음 모형에 대해</p>
 <p><code>lose_wt_01 ~ sex + bmipct + media</code></p>
-<p>모형의 파라미터를 해석해보고, 모형의 예측력에 대해서도 살펴보세요.</p>
+<ul>
+<li>모형의 파라미터를 해석해보고,</li>
+<li>모형의 예측력에 대해서도 1) 확률 측면, 2) binary class 측면에서 살펴보세요.</li>
+</ul>
 
 
 </section>
