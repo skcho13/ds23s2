@@ -1517,12 +1517,12 @@ code
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="101">
-<div class="cell-output cell-output-display" data-execution_count="101">
+<div class="cell" data-execution_count="110">
+<div class="cell-output cell-output-display" data-execution_count="110">
 <p><img src="misc4_files/figure-html/cell-83-output-1.png" width="942" height="465"></p>
 </div>
 </div>
-<p>잔차 확인</p>
+<p>Original scale로 예측값</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1535,23 +1535,34 @@ code
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(bikes_daily_resid, x<span class="op">=</span><span class="st">'temp_m'</span>, y<span class="op">=</span><span class="st">'resid_c2'</span>)</span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dots(color<span class="op">=</span><span class="st">'.6'</span>))</span>
-<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.PolyFit(<span class="dv">5</span>))</span>
-<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(color<span class="op">=</span><span class="st">"w"</span>), so.Agg(<span class="kw">lambda</span> x: <span class="dv">0</span>))</span>
-<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>    .facet(<span class="st">"year"</span>)</span>
-<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">6</span>))</span>
-<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>    .limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb98-9"><a href="#cb98-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>temp_m <span class="op">=</span> np.linspace(bikes_daily[<span class="st">"temp_m"</span>].<span class="bu">min</span>(), bikes_daily[<span class="st">"temp_m"</span>].<span class="bu">max</span>(), <span class="dv">30</span>)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>year <span class="op">=</span> np.array([<span class="st">"2011"</span>, <span class="st">"2012"</span>])</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>wday <span class="op">=</span> np.array([<span class="st">"Sun"</span>, <span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>, <span class="st">"Sat"</span>])</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(product(temp_m, year, wday)),</span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"temp_m"</span>, <span class="st">"year"</span>, <span class="st">"wday"</span>],</span>
+<span id="cb98-9"><a href="#cb98-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb98-10"><a href="#cb98-10" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"pred_c"</span>] <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>mod_c2.predict(grid)</span>
+<span id="cb98-11"><a href="#cb98-11" aria-hidden="true" tabindex="-1"></a>grid[<span class="st">"pred_c"</span>] <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>mod_c2.predict(grid)</span>
+<span id="cb98-12"><a href="#cb98-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-13"><a href="#cb98-13" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb98-14"><a href="#cb98-14" aria-hidden="true" tabindex="-1"></a>    so.Plot(grid, x<span class="op">=</span><span class="st">'temp_m'</span>, y<span class="op">=</span><span class="st">'pred_c'</span>, color<span class="op">=</span><span class="st">"year"</span>)</span>
+<span id="cb98-15"><a href="#cb98-15" aria-hidden="true" tabindex="-1"></a>    .add(so.Dots())</span>
+<span id="cb98-16"><a href="#cb98-16" aria-hidden="true" tabindex="-1"></a>    .facet(<span class="st">"wday"</span>, wrap<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb98-17"><a href="#cb98-17" aria-hidden="true" tabindex="-1"></a>    .label(title<span class="op">=</span><span class="st">"Pred of mod_c2 </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>)</span>
+<span id="cb98-18"><a href="#cb98-18" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
+<span id="cb98-19"><a href="#cb98-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="105">
-<div class="cell-output cell-output-display" data-execution_count="105">
-<p><img src="misc4_files/figure-html/cell-84-output-1.png" width="657" height="561"></p>
+<div class="cell" data-execution_count="107">
+<div class="cell-output cell-output-display" data-execution_count="107">
+<p><img src="misc4_files/figure-html/cell-84-output-1.png" width="942" height="465"></p>
 </div>
 </div>
+<p>잔차 확인</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1565,37 +1576,66 @@ code
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(bikes_daily_resid, x<span class="op">=</span><span class="st">'date'</span>, y<span class="op">=</span><span class="st">'resid_c2'</span>)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(bikes_daily_resid, x<span class="op">=</span><span class="st">'temp_m'</span>, y<span class="op">=</span><span class="st">'resid_c2'</span>)</span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dots(color<span class="op">=</span><span class="st">'.6'</span>))</span>
 <span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.PolyFit(<span class="dv">5</span>))</span>
 <span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(color<span class="op">=</span><span class="st">"w"</span>), so.Agg(<span class="kw">lambda</span> x: <span class="dv">0</span>))</span>
-<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">6</span>))</span>
-<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>    .limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>    .facet(<span class="st">"year"</span>)</span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">6</span>))</span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>    .limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="105">
+<div class="cell-output cell-output-display" data-execution_count="105">
+<p><img src="misc4_files/figure-html/cell-85-output-1.png" width="657" height="561"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+code
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>    so.Plot(bikes_daily_resid, x<span class="op">=</span><span class="st">'date'</span>, y<span class="op">=</span><span class="st">'resid_c2'</span>)</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    .add(so.Dots(color<span class="op">=</span><span class="st">'.6'</span>))</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(), so.PolyFit(<span class="dv">5</span>))</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>    .add(so.Line(color<span class="op">=</span><span class="st">"w"</span>), so.Agg(<span class="kw">lambda</span> x: <span class="dv">0</span>))</span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>    .layout(size<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">6</span>))</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>    .limit(y<span class="op">=</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 <div class="cell" data-execution_count="104">
 <div class="cell-output cell-output-display" data-execution_count="104">
-<p><img src="misc4_files/figure-html/cell-85-output-1.png" width="657" height="561"></p>
+<p><img src="misc4_files/figure-html/cell-86-output-1.png" width="657" height="561"></p>
 </div>
 </div>
 <p><strong>모형의 비교와 각 예측변수의 공헌도</strong></p>
 <div class="cell" data-execution_count="82">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>mod_c_year <span class="op">=</span> ols(<span class="st">"lcasual ~ year"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>mod_c_temp <span class="op">=</span> ols(<span class="st">"lcasual ~ year + temp_m + I(temp_m**2)"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>mod_c_month <span class="op">=</span> ols(</span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lcasual ~ year + temp_m + I(temp_m**2) + month"</span>, data<span class="op">=</span>bikes_daily</span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
-<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>mod_c_wday <span class="op">=</span> ols(</span>
-<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lcasual ~ year + temp_m + I(temp_m**2) + month + wday"</span>, data<span class="op">=</span>bikes_daily</span>
-<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>).fit()</span>
-<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
-<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f" year: </span><span class="sc">{</span>mod_c_year<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
-<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature: </span><span class="sc">{</span>mod_c_temp<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
-<span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months: </span><span class="sc">{</span>mod_c_month<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
-<span id="cb100-13"><a href="#cb100-13" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months + days of the week: </span><span class="sc">{</span>mod_c_wday<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">"</span>,</span>
-<span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>mod_c_year <span class="op">=</span> ols(<span class="st">"lcasual ~ year"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>mod_c_temp <span class="op">=</span> ols(<span class="st">"lcasual ~ year + temp_m + I(temp_m**2)"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>mod_c_month <span class="op">=</span> ols(</span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lcasual ~ year + temp_m + I(temp_m**2) + month"</span>, data<span class="op">=</span>bikes_daily</span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>mod_c_wday <span class="op">=</span> ols(</span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lcasual ~ year + temp_m + I(temp_m**2) + month + wday"</span>, data<span class="op">=</span>bikes_daily</span>
+<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb101-9"><a href="#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb101-10"><a href="#cb101-10" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f" year: </span><span class="sc">{</span>mod_c_year<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
+<span id="cb101-11"><a href="#cb101-11" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature: </span><span class="sc">{</span>mod_c_temp<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
+<span id="cb101-12"><a href="#cb101-12" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months: </span><span class="sc">{</span>mod_c_month<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
+<span id="cb101-13"><a href="#cb101-13" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months + days of the week: </span><span class="sc">{</span>mod_c_wday<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">"</span>,</span>
+<span id="cb101-14"><a href="#cb101-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> year: 0.056
  year + temperature: 0.550
@@ -1605,13 +1645,13 @@ code
 </div>
 <p>예측값을 original scale로 다시 되돌려 R squared 계산</p>
 <div class="cell" data-execution_count="90">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>bikes_daily_resid2 <span class="op">=</span> bikes_daily.assign(</span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>    resid_c_year <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_year.fittedvalues,</span>
-<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>    resid_c_temp <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_temp.fittedvalues,</span>
-<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>    resid_c_month <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_month.fittedvalues,</span>
-<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>    resid_c_wday <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_wday.fittedvalues,</span>
-<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>bikes_daily_resid2.iloc[:, <span class="op">-</span><span class="dv">4</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>bikes_daily_resid2 <span class="op">=</span> bikes_daily.assign(</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>    resid_c_year <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_year.fittedvalues,</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>    resid_c_temp <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_temp.fittedvalues,</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>    resid_c_month <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_month.fittedvalues,</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>    resid_c_wday <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span><span class="op">**</span>mod_c_wday.fittedvalues,</span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>bikes_daily_resid2.iloc[:, <span class="op">-</span><span class="dv">4</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="90">
 <pre><code>     resid_c_year  resid_c_temp  resid_c_month  resid_c_wday
 0          448.98        298.94         179.48        362.04
@@ -1631,7 +1671,7 @@ code
 </div>
 <p>Original scale로 R squared 계산</p>
 <div class="cell" data-execution_count="91">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>bikes_daily_resid2.iloc[:, <span class="op">-</span><span class="dv">4</span>:].var() <span class="op">/</span> bikes_daily_resid2[<span class="st">"casual"</span>].var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>bikes_daily_resid2.iloc[:, <span class="op">-</span><span class="dv">4</span>:].var() <span class="op">/</span> bikes_daily_resid2[<span class="st">"casual"</span>].var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="91">
 <pre><code>resid_c_year    0.04
 resid_c_temp    0.33
@@ -1642,20 +1682,20 @@ dtype: float64</code></pre>
 </div>
 <p>log 변환을 하지 않은 경우</p>
 <div class="cell" data-execution_count="81">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>mod_c_year <span class="op">=</span> ols(<span class="st">"casual ~ year"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>mod_c_temp <span class="op">=</span> ols(<span class="st">"casual ~ year + temp_m + I(temp_m**2)"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>mod_c_month <span class="op">=</span> ols(</span>
-<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"casual ~ year + temp_m + I(temp_m**2) + month"</span>, data<span class="op">=</span>bikes_daily</span>
-<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
-<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>mod_c_wday <span class="op">=</span> ols(</span>
-<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"casual ~ year + temp_m + I(temp_m**2) + month + wday"</span>, data<span class="op">=</span>bikes_daily</span>
-<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a>).fit()</span>
-<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
-<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f" year: </span><span class="sc">{</span>mod_c_year<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
-<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature: </span><span class="sc">{</span>mod_c_temp<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
-<span id="cb106-12"><a href="#cb106-12" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months: </span><span class="sc">{</span>mod_c_month<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
-<span id="cb106-13"><a href="#cb106-13" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months + days of the week: </span><span class="sc">{</span>mod_c_wday<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">"</span>,</span>
-<span id="cb106-14"><a href="#cb106-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>mod_c_year <span class="op">=</span> ols(<span class="st">"casual ~ year"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>mod_c_temp <span class="op">=</span> ols(<span class="st">"casual ~ year + temp_m + I(temp_m**2)"</span>, data<span class="op">=</span>bikes_daily).fit()</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>mod_c_month <span class="op">=</span> ols(</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"casual ~ year + temp_m + I(temp_m**2) + month"</span>, data<span class="op">=</span>bikes_daily</span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>mod_c_wday <span class="op">=</span> ols(</span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"casual ~ year + temp_m + I(temp_m**2) + month + wday"</span>, data<span class="op">=</span>bikes_daily</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f" year: </span><span class="sc">{</span>mod_c_year<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature: </span><span class="sc">{</span>mod_c_temp<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
+<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months: </span><span class="sc">{</span>mod_c_month<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">"</span>,</span>
+<span id="cb107-13"><a href="#cb107-13" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"year + temperature + months + days of the week: </span><span class="sc">{</span>mod_c_wday<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">"</span>,</span>
+<span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> year: 0.062
  year + temperature: 0.363
