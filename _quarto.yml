@@ -40,6 +40,8 @@ website:
     contents:
       - href: index.qmd
       - href: contents/notice.qmd
+      - href: https://docs.google.com/document/d/1s14dhjhIEhGr8m0eAxwZrmrihULqdS9Xxp4Vno07Dh4/edit?usp=sharing
+        text: 기말고사
       - text: ---
       - section: Introduction
         contents:
