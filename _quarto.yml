@@ -7,7 +7,7 @@ project:
     - "!contents/ignore/"
     #- "!exercise*.ipynb"
     - "!contents/*.py"
-    - "!final*.ipynb"
+    #- "!final*.ipynb"
   resources: CNAME
 
 website:
