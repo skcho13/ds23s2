@@ -34,12 +34,12 @@ website:
     #     href: 
     #     text: "GitHub organization"
     style: "docked"
-    search: true
+    search: false
     collapse-level: 2
     
     contents:
       - href: index.qmd
-      - href: contents/notice.qmd
+      #- href: contents/notice.qmd
       - text: ---
       - section: Introduction
         contents:
@@ -78,20 +78,20 @@ website:
               - href: contents/crosstab.ipynb
                 text: Pivot Table
               - href: contents/exercise_wrangle.ipynb
-          - section: Solutions
-            contents:
-              - href: contents/sol1.ipynb
-              - href: contents/sol2.ipynb
+          # - section: Solutions
+          #   contents:
+          #     - href: contents/sol1.ipynb
+          #     - href: contents/sol2.ipynb
       - section: Exercises
         contents:
           - href: contents/exercise1.ipynb
             text: Billboard
-            contents:
-              - href: contents/exercise1_sol.ipynb
+            # contents:
+            #   - href: contents/exercise1_sol.ipynb
           - href: contents/exercise2.ipynb
             text: MovieLens
-            contents:
-              - href: contents/exercise2_sol.ipynb
+            # contents:
+            #   - href: contents/exercise2_sol.ipynb
       - text: ---
       - section: contents/eda.ipynb
         contents:
@@ -103,18 +103,18 @@ website:
           - href: contents/modelling1.ipynb
           - href: contents/modelling2.ipynb
           - href: contents/logistic.ipynb
-            contents:
-              - href: contents/modelling3_ex.ipynb
-          - href: contents/misc4.ipynb
+            # contents:
+            #   - href: contents/modelling3_ex.ipynb
+          #- href: contents/misc4.ipynb
       - text: ---
       - href: contents/statistics.ipynb
-      - text: ---
-      - section: Communicate
-        contents:
-          - href: https://docs.google.com/document/d/1cZ0JzhjjdMBYtlpgkKGJ9LSbuwcv5eRIOQ5CRahw5Js/edit?usp=sharing
-            text: Ask
-          - href: https://docs.google.com/document/d/1CFVAUGKB1h8z3vEAl5vjp5lvYiv-FLYtlRDFGSN2_aY/edit?usp=sharing
-            text: Personal Project
+      # - text: ---
+      # - section: Communicate
+      #   contents:
+      #     - href: https://docs.google.com/document/d/1cZ0JzhjjdMBYtlpgkKGJ9LSbuwcv5eRIOQ5CRahw5Js/edit?usp=sharing
+      #       text: Ask
+      #     - href: https://docs.google.com/document/d/1CFVAUGKB1h8z3vEAl5vjp5lvYiv-FLYtlRDFGSN2_aY/edit?usp=sharing
+      #       text: Personal Project
 
   # navbar:
   #   left:
