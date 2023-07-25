@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -56,7 +56,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -71,19 +72,23 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Saratoga House Price Prediction</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      DG Data Analysis &amp; Vis
+      </li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
     </div>
   </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">DG Data Analysis &amp; Vis</a> 
@@ -93,46 +98,53 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/intro.html" class="sidebar-item-text sidebar-link">Data Analysis Intro</a>
+  <a href="../contents/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analysis Intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/setup.html" class="sidebar-item-text sidebar-link">Setup</a>
+  <a href="../contents/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../contents/pandas.html" class="sidebar-item-text sidebar-link">NumPy and pandas</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <a href="../contents/pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NumPy and pandas</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/inspection.html" class="sidebar-item-text sidebar-link">Inspecting data</a>
+  <a href="../contents/inspection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inspecting data</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/vis.html" class="sidebar-item-text sidebar-link">Data visualization</a>
+  <a href="../contents/vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data visualization</span></a>
   </div>
 </li>
       </ul>
@@ -140,35 +152,40 @@ ul.task-list li input[type="checkbox"] {
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Visualize</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Visualize</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/seaborn.html" class="sidebar-item-text sidebar-link">Seaborn.objects</a>
+  <a href="../contents/seaborn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seaborn.objects</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../contents/plots.html" class="sidebar-item-text sidebar-link">Plots</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <a href="../contents/plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plots</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/alt_plots.html" class="sidebar-item-text sidebar-link">Alternative plots</a>
+  <a href="../contents/alt_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alternative plots</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/customizing.html" class="sidebar-item-text sidebar-link">Customizing</a>
+  <a href="../contents/customizing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Customizing</span></a>
   </div>
 </li>
       </ul>
@@ -176,73 +193,84 @@ ul.task-list li input[type="checkbox"] {
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Transform</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Transform</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../contents/subsetting.html" class="sidebar-item-text sidebar-link">Subsetting</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#" aria-expanded="false">
+            <a href="../contents/subsetting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Subsetting</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/views.html" class="sidebar-item-text sidebar-link">Views and Copies</a>
+  <a href="../contents/views.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Views and Copies</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../contents/transform.html" class="sidebar-item-text sidebar-link">Transforming I</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false">
+            <a href="../contents/transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transforming I</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/case1.html" class="sidebar-item-text sidebar-link">Case study</a>
+  <a href="../contents/case1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Case study</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/exercise_transform.html" class="sidebar-item-text sidebar-link">Exercises</a>
+  <a href="../contents/exercise_transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercises</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">Transforming II</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+ <span class="menu-text">Transforming II</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/combine.html" class="sidebar-item-text sidebar-link">Combine</a>
+  <a href="../contents/combine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/pivot.html" class="sidebar-item-text sidebar-link">Pivot</a>
+  <a href="../contents/pivot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pivot</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/crosstab.html" class="sidebar-item-text sidebar-link">Pivot Table</a>
+  <a href="../contents/crosstab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pivot Table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/exercise_wrangle.html" class="sidebar-item-text sidebar-link">Exercises</a>
+  <a href="../contents/exercise_wrangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercises</span></a>
   </div>
 </li>
       </ul>
@@ -251,20 +279,23 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">Exercises</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Exercises</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/exercise1.html" class="sidebar-item-text sidebar-link">Billboard</a>
+  <a href="../contents/exercise1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Billboard</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/exercise2.html" class="sidebar-item-text sidebar-link">MovieLens</a>
+  <a href="../contents/exercise2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MovieLens</span></a>
   </div>
 </li>
       </ul>
@@ -272,15 +303,17 @@ ul.task-list li input[type="checkbox"] {
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../contents/eda.html" class="sidebar-item-text sidebar-link">Exploratory Data Analysis</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+            <a href="../contents/eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/discretize.html" class="sidebar-item-text sidebar-link">Discretize</a>
+  <a href="../contents/discretize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discretize</span></a>
   </div>
 </li>
       </ul>
@@ -288,30 +321,35 @@ ul.task-list li input[type="checkbox"] {
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">Modelling</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+ <span class="menu-text">Modelling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/modelbasic.html" class="sidebar-item-text sidebar-link">Model basics</a>
+  <a href="../contents/modelbasic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/modelling1.html" class="sidebar-item-text sidebar-link">Model building I</a>
+  <a href="../contents/modelling1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model building I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/modelling2.html" class="sidebar-item-text sidebar-link">Model building II</a>
+  <a href="../contents/modelling2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model building II</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/logistic.html" class="sidebar-item-text sidebar-link">Model building III</a>
+  <a href="../contents/logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model building III</span></a>
   </div>
 </li>
       </ul>
@@ -319,12 +357,14 @@ ul.task-list li input[type="checkbox"] {
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contents/statistics.html" class="sidebar-item-text sidebar-link">Statistics</a>
+  <a href="../contents/statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
@@ -334,7 +374,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Saratoga House Price Prediction</h1>
+<h1 class="title">Saratoga House Price Prediction</h1>
 <p class="subtitle lead">R for Data Science by Wickham &amp; Grolemund</p>
 </div>
 
@@ -420,176 +460,410 @@ Name: count, dtype: int64</code></pre>
 </div>
 <div class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
-
-<table class="simpletable">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
-<tbody><tr>
-  <th>Dep. Variable:</th>         <td>lprice</td>      <th>  R-squared:         </th> <td>   0.569</td> 
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>lprice</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.569</td>
 </tr>
-<tr>
-  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.566</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.566</td>
 </tr>
-<tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   171.7</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>171.7</td>
 </tr>
-<tr>
-  <th>Date:</th>             <td>Fri, 09 Jun 2023</td> <th>  Prob (F-statistic):</th> <td>2.18e-297</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, 09 Jun 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>2.18e-297</td>
 </tr>
-<tr>
-  <th>Time:</th>                 <td>13:59:52</td>     <th>  Log-Likelihood:    </th> <td> -872.23</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>13:59:52</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-872.23</td>
 </tr>
-<tr>
-  <th>No. Observations:</th>      <td>  1705</td>      <th>  AIC:               </th> <td>   1772.</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>1705</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>1772.</td>
 </tr>
-<tr>
-  <th>Df Residuals:</th>          <td>  1691</td>      <th>  BIC:               </th> <td>   1849.</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>1691</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>1849.</td>
 </tr>
-<tr>
-  <th>Df Model:</th>              <td>    13</td>      <th>                     </th>     <td> </td>    
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>13</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-<tr>
-  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-               <td></td>                 <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
 </tr>
-<tr>
-  <th>Intercept</th>                  <td>   16.1549</td> <td>    0.128</td> <td>  126.623</td> <td> 0.000</td> <td>   15.905</td> <td>   16.405</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>16.1549</td>
+<td>0.128</td>
+<td>126.623</td>
+<td>0.000</td>
+<td>15.905</td>
+<td>16.405</td>
 </tr>
-<tr>
-  <th>heating[T.hot air]</th>         <td>    0.0306</td> <td>    0.085</td> <td>    0.358</td> <td> 0.720</td> <td>   -0.137</td> <td>    0.198</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">heating[T.hot air]</td>
+<td>0.0306</td>
+<td>0.085</td>
+<td>0.358</td>
+<td>0.720</td>
+<td>-0.137</td>
+<td>0.198</td>
 </tr>
-<tr>
-  <th>heating[T.hot water/steam]</th> <td>   -0.0143</td> <td>    0.089</td> <td>   -0.162</td> <td> 0.871</td> <td>   -0.188</td> <td>    0.159</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">heating[T.hot water/steam]</td>
+<td>-0.0143</td>
+<td>0.089</td>
+<td>-0.162</td>
+<td>0.871</td>
+<td>-0.188</td>
+<td>0.159</td>
 </tr>
-<tr>
-  <th>fuel[T.gas]</th>                <td>    0.0846</td> <td>    0.084</td> <td>    1.008</td> <td> 0.314</td> <td>   -0.080</td> <td>    0.249</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">fuel[T.gas]</td>
+<td>0.0846</td>
+<td>0.084</td>
+<td>1.008</td>
+<td>0.314</td>
+<td>-0.080</td>
+<td>0.249</td>
 </tr>
-<tr>
-  <th>fuel[T.oil]</th>                <td>    0.0296</td> <td>    0.089</td> <td>    0.331</td> <td> 0.740</td> <td>   -0.146</td> <td>    0.205</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">fuel[T.oil]</td>
+<td>0.0296</td>
+<td>0.089</td>
+<td>0.331</td>
+<td>0.740</td>
+<td>-0.146</td>
+<td>0.205</td>
 </tr>
-<tr>
-  <th>sewer[T.public/commercial]</th> <td>   -0.0104</td> <td>    0.118</td> <td>   -0.088</td> <td> 0.930</td> <td>   -0.242</td> <td>    0.221</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">sewer[T.public/commercial]</td>
+<td>-0.0104</td>
+<td>0.118</td>
+<td>-0.088</td>
+<td>0.930</td>
+<td>-0.242</td>
+<td>0.221</td>
 </tr>
-<tr>
-  <th>sewer[T.septic]</th>            <td>   -0.0298</td> <td>    0.119</td> <td>   -0.250</td> <td> 0.802</td> <td>   -0.263</td> <td>    0.203</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">sewer[T.septic]</td>
+<td>-0.0298</td>
+<td>0.119</td>
+<td>-0.250</td>
+<td>0.802</td>
+<td>-0.263</td>
+<td>0.203</td>
 </tr>
-<tr>
-  <th>waterfront[T.Yes]</th>          <td>    0.8187</td> <td>    0.114</td> <td>    7.198</td> <td> 0.000</td> <td>    0.596</td> <td>    1.042</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">waterfront[T.Yes]</td>
+<td>0.8187</td>
+<td>0.114</td>
+<td>7.198</td>
+<td>0.000</td>
+<td>0.596</td>
+<td>1.042</td>
 </tr>
-<tr>
-  <th>centralAir[T.Yes]</th>          <td>    0.1134</td> <td>    0.024</td> <td>    4.776</td> <td> 0.000</td> <td>    0.067</td> <td>    0.160</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">centralAir[T.Yes]</td>
+<td>0.1134</td>
+<td>0.024</td>
+<td>4.776</td>
+<td>0.000</td>
+<td>0.067</td>
+<td>0.160</td>
 </tr>
-<tr>
-  <th>newConstruction[T.Yes]</th>     <td>   -0.1124</td> <td>    0.049</td> <td>   -2.298</td> <td> 0.022</td> <td>   -0.208</td> <td>   -0.016</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">newConstruction[T.Yes]</td>
+<td>-0.1124</td>
+<td>0.049</td>
+<td>-2.298</td>
+<td>0.022</td>
+<td>-0.208</td>
+<td>-0.016</td>
 </tr>
-<tr>
-  <th>livingArea</th>                 <td>    0.0005</td> <td> 2.85e-05</td> <td>   18.901</td> <td> 0.000</td> <td>    0.000</td> <td>    0.001</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">livingArea</td>
+<td>0.0005</td>
+<td>2.85e-05</td>
+<td>18.901</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>0.001</td>
 </tr>
-<tr>
-  <th>bedrooms</th>                   <td>    0.0037</td> <td>    0.017</td> <td>    0.213</td> <td> 0.831</td> <td>   -0.030</td> <td>    0.038</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">bedrooms</td>
+<td>0.0037</td>
+<td>0.017</td>
+<td>0.213</td>
+<td>0.831</td>
+<td>-0.030</td>
+<td>0.038</td>
 </tr>
-<tr>
-  <th>fireplaces</th>                 <td>    0.0307</td> <td>    0.021</td> <td>    1.480</td> <td> 0.139</td> <td>   -0.010</td> <td>    0.071</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">fireplaces</td>
+<td>0.0307</td>
+<td>0.021</td>
+<td>1.480</td>
+<td>0.139</td>
+<td>-0.010</td>
+<td>0.071</td>
 </tr>
-<tr>
-  <th>bathrooms</th>                  <td>    0.1719</td> <td>    0.023</td> <td>    7.591</td> <td> 0.000</td> <td>    0.127</td> <td>    0.216</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">bathrooms</td>
+<td>0.1719</td>
+<td>0.023</td>
+<td>7.591</td>
+<td>0.000</td>
+<td>0.127</td>
+<td>0.216</td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-  <th>Omnibus:</th>       <td>80.598</td> <th>  Durbin-Watson:     </th> <td>   1.393</td>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>80.598</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>1.393</td>
 </tr>
-<tr>
-  <th>Prob(Omnibus):</th> <td> 0.000</td> <th>  Jarque-Bera (JB):  </th> <td> 273.784</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>273.784</td>
 </tr>
-<tr>
-  <th>Skew:</th>          <td>-0.002</td> <th>  Prob(JB):          </th> <td>3.54e-60</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>-0.002</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>3.54e-60</td>
 </tr>
-<tr>
-  <th>Kurtosis:</th>      <td> 4.963</td> <th>  Cond. No.          </th> <td>3.91e+04</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>4.963</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>3.91e+04</td>
 </tr>
-</tbody></table><br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 3.91e+04. This might indicate that there are<br>strong multicollinearity or other numerical problems.
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 3.91e+04. This might indicate that there are<br>strong multicollinearity or other numerical problems.
 </div>
 </div>
 <div class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
-
-<table class="simpletable">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
-<tbody><tr>
-  <th>Dep. Variable:</th>         <td>lprice</td>      <th>  R-squared:         </th> <td>   0.567</td> 
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>lprice</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.567</td>
 </tr>
-<tr>
-  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.565</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.565</td>
 </tr>
-<tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   317.5</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>317.5</td>
 </tr>
-<tr>
-  <th>Date:</th>             <td>Fri, 09 Jun 2023</td> <th>  Prob (F-statistic):</th> <td>4.97e-303</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Fri, 09 Jun 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>4.97e-303</td>
 </tr>
-<tr>
-  <th>Time:</th>                 <td>13:59:52</td>     <th>  Log-Likelihood:    </th> <td> -875.87</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>13:59:52</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-875.87</td>
 </tr>
-<tr>
-  <th>No. Observations:</th>      <td>  1705</td>      <th>  AIC:               </th> <td>   1768.</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>1705</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>1768.</td>
 </tr>
-<tr>
-  <th>Df Residuals:</th>          <td>  1697</td>      <th>  BIC:               </th> <td>   1811.</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>1697</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>1811.</td>
 </tr>
-<tr>
-  <th>Df Model:</th>              <td>     7</td>      <th>                     </th>     <td> </td>    
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>7</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-<tr>
-  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-             <td></td>                <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
 </tr>
-<tr>
-  <th>Intercept</th>               <td>   17.0840</td> <td>    0.049</td> <td>  350.086</td> <td> 0.000</td> <td>   16.988</td> <td>   17.180</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>17.0840</td>
+<td>0.049</td>
+<td>350.086</td>
+<td>0.000</td>
+<td>16.988</td>
+<td>17.180</td>
 </tr>
-<tr>
-  <th>C(bedrooms)[T.3]</th>        <td>    0.1030</td> <td>    0.028</td> <td>    3.707</td> <td> 0.000</td> <td>    0.048</td> <td>    0.157</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(bedrooms)[T.3]</td>
+<td>0.1030</td>
+<td>0.028</td>
+<td>3.707</td>
+<td>0.000</td>
+<td>0.048</td>
+<td>0.157</td>
 </tr>
-<tr>
-  <th>C(bedrooms)[T.4]</th>        <td>    0.0650</td> <td>    0.037</td> <td>    1.755</td> <td> 0.079</td> <td>   -0.008</td> <td>    0.138</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">C(bedrooms)[T.4]</td>
+<td>0.0650</td>
+<td>0.037</td>
+<td>1.755</td>
+<td>0.079</td>
+<td>-0.008</td>
+<td>0.138</td>
 </tr>
-<tr>
-  <th>C(bedrooms)[T.5]</th>        <td>   -0.0419</td> <td>    0.067</td> <td>   -0.630</td> <td> 0.529</td> <td>   -0.172</td> <td>    0.089</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(bedrooms)[T.5]</td>
+<td>-0.0419</td>
+<td>0.067</td>
+<td>-0.630</td>
+<td>0.529</td>
+<td>-0.172</td>
+<td>0.089</td>
 </tr>
-<tr>
-  <th>waterfront[T.Yes]</th>       <td>    0.8125</td> <td>    0.113</td> <td>    7.177</td> <td> 0.000</td> <td>    0.590</td> <td>    1.035</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">waterfront[T.Yes]</td>
+<td>0.8125</td>
+<td>0.113</td>
+<td>7.177</td>
+<td>0.000</td>
+<td>0.590</td>
+<td>1.035</td>
 </tr>
-<tr>
-  <th>centralAir[T.Yes]</th>       <td>    0.1462</td> <td>    0.022</td> <td>    6.645</td> <td> 0.000</td> <td>    0.103</td> <td>    0.189</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">centralAir[T.Yes]</td>
+<td>0.1462</td>
+<td>0.022</td>
+<td>6.645</td>
+<td>0.000</td>
+<td>0.103</td>
+<td>0.189</td>
 </tr>
-<tr>
-  <th>standardize(livingArea)</th> <td>    0.3279</td> <td>    0.017</td> <td>   19.617</td> <td> 0.000</td> <td>    0.295</td> <td>    0.361</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">standardize(livingArea)</td>
+<td>0.3279</td>
+<td>0.017</td>
+<td>19.617</td>
+<td>0.000</td>
+<td>0.295</td>
+<td>0.361</td>
 </tr>
-<tr>
-  <th>bathrooms</th>               <td>    0.1844</td> <td>    0.022</td> <td>    8.302</td> <td> 0.000</td> <td>    0.141</td> <td>    0.228</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">bathrooms</td>
+<td>0.1844</td>
+<td>0.022</td>
+<td>8.302</td>
+<td>0.000</td>
+<td>0.141</td>
+<td>0.228</td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-  <th>Omnibus:</th>       <td>85.397</td> <th>  Durbin-Watson:     </th> <td>   1.404</td>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>85.397</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>1.404</td>
 </tr>
-<tr>
-  <th>Prob(Omnibus):</th> <td> 0.000</td> <th>  Jarque-Bera (JB):  </th> <td> 303.812</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>303.812</td>
 </tr>
-<tr>
-  <th>Skew:</th>          <td> 0.002</td> <th>  Prob(JB):          </th> <td>1.07e-66</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>0.002</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>1.07e-66</td>
 </tr>
-<tr>
-  <th>Kurtosis:</th>      <td> 5.068</td> <th>  Cond. No.          </th> <td>    27.0</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>5.068</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>27.0</td>
 </tr>
-</tbody></table><br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 </div>
 </div>
 <div class="cell" data-execution_count="14">
@@ -828,9 +1102,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -895,6 +1183,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -938,7 +1312,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -952,6 +1326,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">This work © 2023 by Sungkyun Cho is licensed under CC BY-NC-SA 4.0</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 
